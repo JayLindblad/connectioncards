@@ -48,6 +48,10 @@
     position: relative;
   }
 
+  .hero .card-option { color: var(--mid); }
+  .hero .card-option:hover { color: var(--ink); border-color: var(--rule); }
+  .hero .card-option.selected { color: var(--ink); border-color: var(--ink); }
+
   .hero-tag {
     font-size: 10px;
     letter-spacing: 0.3em;
@@ -133,7 +137,8 @@
   }
 
   .section-label {
-    font-size: 9px;
+    font-size: 11px;
+    font-weight: 500;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--accent);
@@ -188,21 +193,63 @@
 
   .mock-card-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-  .circled {
-    border: 1px solid var(--ink);
-    border-radius: 50px;
+  .mock-card-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mock-card-col-label {
+    color: #999;
+    font-size: 10px;
+  }
+
+  .card-options-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  /* clickable options */
+  .card-option {
+    cursor: pointer;
     padding: 1px 8px;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    color: #bbb;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+
+  .card-option:hover { color: #888; border-color: #ddd; }
+
+  .card-option.selected {
+    border-color: var(--ink);
     color: var(--ink);
     font-weight: 400;
   }
 
-  .mock-card .name-line {
-    font-size: 3em;
+  /* name input */
+  .card-name-input {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    margin: 8px 0 4px;
-    letter-spacing: 0.05em;
+    font-size: 2em;
+    border: none;
+    border-bottom: 1px solid #eee;
+    outline: none;
+    width: 100%;
+    background: transparent;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    padding: 2px 0 4px;
+    margin-top: 2px;
+    transition: border-color 0.2s;
   }
+
+  .card-name-input:focus { border-bottom-color: var(--accent); }
+  .card-name-input::placeholder { color: #ddd; }
 
   .mock-card-meta {
     display: grid;
@@ -241,6 +288,7 @@
 
   .why-title {
     font-size: 11px;
+    font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -275,6 +323,12 @@
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 8px;
+  }
+
+  .tag-cloud-title {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
   }
 
   .tag {
@@ -346,25 +400,82 @@
     color: #a89f94;
   }
 
+  /* ── ACCORDION ── */
   .pif-cards {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 0;
+    border: 1px solid #3a3530;
   }
 
   .mini-card {
-    border: 1px solid #3a3530;
-    padding: 16px 20px;
-    font-size: 11px;
-    color: #8c7b6b;
+    border-bottom: 1px solid #3a3530;
+    cursor: pointer;
+    transition: background 0.2s;
+    overflow: hidden;
+  }
+
+  .mini-card:last-child { border-bottom: none; }
+
+  .mini-card:hover { background: rgba(255,255,255,0.03); }
+  .mini-card.open  { background: rgba(255,255,255,0.04); }
+
+  .mini-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: border-color 0.2s;
+    padding: 20px 24px;
+    transition: color 0.2s;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: #c8beb4;
+    letter-spacing: 0.01em;
   }
 
-  .mini-card:hover { border-color: #6a5f55; color: var(--cream); }
-  .mini-card span { font-size: 16px; }
+  .mini-card:hover .mini-card-header { color: var(--cream); }
+  .mini-card.open  .mini-card-header { color: var(--cream); }
+
+  .mini-card-arrow {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    font-style: normal;
+    color: var(--accent);
+    transition: transform 0.3s ease, opacity 0.2s;
+    display: inline-block;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .mini-card:hover .mini-card-arrow { opacity: 1; }
+  .mini-card.open  .mini-card-arrow { transform: rotate(90deg); opacity: 1; }
+
+  .mini-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 24px;
+    font-size: 12px;
+    line-height: 2;
+    color: #a89f94;
+    letter-spacing: 0.02em;
+  }
+
+  .mini-card.open .mini-card-body {
+    max-height: 140px;
+    padding: 0 24px 20px;
+  }
+
+  .mini-card-body-inner {
+    border-top: 1px solid transparent;
+    padding-top: 14px;
+    transition: border-color 0.35s ease;
+  }
+
+  .mini-card.open .mini-card-body-inner {
+    border-top: 1px solid #433d37;
+    /* padding-top: 14px; */
+  }
 
   /* ── FOOTER ── */
   footer {
@@ -422,11 +533,14 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-tag">Thanks for stopping by</div>
-  <h1>So you got a<br>card from <em>Jay.</em></h1>
+  <h1>It seems you've<br>received a <em>connection card.</em></h1>
   <p class="hero-sub">
-    (Hi) &nbsp;(Hey) &nbsp;<span style="border:1px solid var(--ink);border-radius:50px;padding:1px 10px;">Hello</span> &nbsp;(Um)<br><br>
-    You're here because something happened.<br>
-    Someone handed you a small card. That someone was me.
+  <span class="card-option" data-group="hero-greeting">(Hi)</span>
+  <span class="card-option" data-group="hero-greeting">(Hey)</span>
+  <span class="card-option selected" data-group="hero-greeting" style="border:1px solid var(--ink);border-radius:50px;padding:1px 10px;">(Hello)</span>
+  <span class="card-option" data-group="hero-greeting">(Um)</span>
+  <br><br>
+  You're here because something happened. Someone handed you a small card. That someone was me.
   </p>
   <div class="scroll-hint">Here's the story</div>
   <div class="palm-hero">:) &nbsp; An opportunity awaits</div>
@@ -440,40 +554,72 @@
   <div class="card-section">
     <div>
       <h2>An analog solution<br>to a <em>digital problem.</em></h2>
-      <p class="body-text">We spend so much time connecting online that we've kind of forgotten how to do it in person. You see someone interesting at a bar, on the train, at a show and you just... don't say anything.</p>
-      <p class="body-text">The acquaintance card is a way around that. It's small, it's charming, and it does the awkward part for you. No apps. No algorithms. Just a little piece of paper and a bit of bravery.</p>
-      <p class="body-text">It's inspired by Victorian calling cards (the original way people introduced themselves) updated for someone who just really liked the vibe.</p>
+      <p class="body-text">We spend so much time connecting online that we've kind of forgotten how to do it in person. You see someone interesting at a bar, on the train, at a show, and you just... don't say anything.</p>
+      <p class="body-text">The connection card is a way around that. It's small, it's charming, and it does the awkward part for you. No apps. No algorithms. Just a little piece of paper and a bit of bravery.</p>
+      <p class="body-text">It's inspired by Victorian-era calling cards (the original way people introduced themselves) updated for someone who just really liked the vibe.</p>
     </div>
     <div>
+
+      <!-- INTERACTIVE MOCK CARD -->
       <div class="mock-card">
+
+        <!-- Row 1: Greeting -->
         <div class="mock-card-row">
-          <span class="circled">Hi</span><span>(Hey)</span><span>(Hello)</span><span>(Um)</span>
+          <span class="card-option" data-group="greeting">(Hi)</span>
+          <span class="card-option" data-group="greeting">(Hey)</span>
+          <span class="card-option selected" data-group="greeting">(Hello)</span>
+          <span class="card-option" data-group="greeting">(Um)</span>
         </div>
-        <div class="mock-card-row" style="flex-direction:column; gap:4px;">
-          <span><span class="circled">(My name is)</span> &nbsp;(My friend's name is)</span>
-          <span class="name-line">Jay</span>
+
+        <!-- Row 2: Name -->
+        <div class="mock-card-row mock-card-col" style="border-bottom:1px solid #eee; margin-bottom:10px; padding-bottom:10px;">
+          <div class="card-options-wrap">
+            <span class="card-option selected" data-group="namemode">(My name is)</span>
+            <span class="card-option" data-group="namemode">(My friend's name is)</span>
+          </div>
+          <input class="card-name-input" type="text" value="Jay" placeholder="your name" maxlength="30" />
         </div>
+
+        <!-- Meta: time/place -->
         <div class="mock-card-meta">
           <div><span>Time</span><strong>—</strong></div>
           <div><span>Place</span><strong>Philadelphia</strong></div>
         </div>
-        <div class="mock-card-row" style="flex-direction:column; gap:8px; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:10px;">
-          <span style="color:#999;">I just wanted to say that your</span>
-          <div style="display:flex; flex-wrap:wrap; gap:6px; color:#555;">
-            <span>(look)</span><span>(wit)</span><span>(outfit)</span><span>(height)</span><span>(laugh)</span><span>(energy)</span><span>(smile)</span><span>(kindness)</span><span>(friend)</span><span class="circled">(presence)</span>
+
+        <!-- Row 3: Compliment -->
+        <div class="mock-card-row mock-card-col" style="border-bottom:1px solid #eee; margin-bottom:10px; padding-bottom:10px;">
+          <span class="mock-card-col-label">I just wanted to say that your</span>
+          <div class="card-options-wrap">
+            <span class="card-option" data-group="compliment">(look)</span>
+            <span class="card-option" data-group="compliment">(wit)</span>
+            <span class="card-option" data-group="compliment">(outfit)</span>
+            <span class="card-option" data-group="compliment">(height)</span>
+            <span class="card-option" data-group="compliment">(laugh)</span>
+            <span class="card-option" data-group="compliment">(energy)</span>
+            <span class="card-option" data-group="compliment">(smile)</span>
+            <span class="card-option" data-group="compliment">(kindness)</span>
+            <span class="card-option" data-group="compliment">(friend)</span>
+            <span class="card-option selected" data-group="compliment">(presence)</span>
           </div>
         </div>
+
+        <!-- Row 4: Reaction -->
         <div class="mock-card-row">
-          <span style="color:#bbb;">(is hard to ignore.)</span>
-          <span class="circled">(is intriguing.)</span>
+          <span class="card-option" data-group="reaction">(is hard to ignore.)</span>
+          <span class="card-option selected" data-group="reaction">(is intriguing.)</span>
+          <span class="card-option" data-group="reaction">(caught my eye.)</span>
         </div>
-        <div class="mock-card-row" style="flex-direction:column; gap:8px;">
-          <span style="color:#999;">Hope to hear from you</span>
-          <div style="display:flex; flex-wrap:wrap; gap:6px; color:#555;">
-            <span class="circled">(soon.)</span><span>(one day.)</span>
+
+        <!-- Row 5: Sign off -->
+        <div class="mock-card-row mock-card-col">
+          <span class="mock-card-col-label">Hope to hear from you</span>
+          <div class="card-options-wrap">
+            <span class="card-option selected" data-group="timing">(soon.)</span>
+            <span class="card-option" data-group="timing">(one day.)</span>
           </div>
-          <span style="color:#777;margin-top:10px;">jay@anopportunityawaits.com</span>
+          <span style="color:#aaa; margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
         </div>
+
       </div>
     </div>
   </div>
@@ -493,12 +639,12 @@
     <div class="why-item">
       <div class="why-num">II.</div>
       <div class="why-title">It takes guts</div>
-      <p>Handing someone a card requires a moment of actual bravery (and a little insanity). That's rare. And the people worth knowing usually appreciate it.</p>
+      <p>Handing someone a connection card requires a moment of actual bravery (and a little insanity). Luckily the people worth knowing tend to appreciate that.</p>
     </div>
     <div class="why-item">
       <div class="why-num">III.</div>
       <div class="why-title">It pays forward</div>
-      <p>Each card comes with extras. The idea is that you pass them along too. A little chain of strangers becoming less strange.</p>
+      <p>Hopefully I gave you more than one card. The idea is that you pass them along too. A little chain of strangers becoming less strange.</p>
     </div>
   </div>
 </section>
@@ -510,17 +656,10 @@
   <div class="section-label">03 — Who am I</div>
   <div class="jay-section">
     <div>
-      <h2>A person<br><em>just like you.</em></h2>
+      <h2>A person,<br><em>just like you.</em></h2>
       <p class="body-text">I hand these out because I genuinely think meeting strangers is one of the best things we can do. Not in a weird way. In a "the world gets a little bigger every time" kind of way.</p>
       <p class="body-text">If you're reading this, you were worth approaching. And I think that's really cool.</p>
-      <div class="tag-cloud" style="margin-top: 28px;">
-        <span class="tag filled">Philadelphia</span>
-        <span class="tag">Going out</span>
-        <span class="tag">Music</span>
-        <span class="tag">Food & drinks</span>
-        <span class="tag">Tech</span>
-        <span class="tag">Reading</span>
-      </div>
+      
     </div>
     <div>
       <div class="details-block">
@@ -530,7 +669,7 @@
         </div>
         <div class="detail-row">
           <span class="detail-label">Based in</span>
-          <span class="detail-val">Philly area</span>
+          <span class="detail-val">Philly</span>
         </div>
         <div class="detail-row">
           <span class="detail-label">Usually found</span>
@@ -541,11 +680,21 @@
           <span class="detail-val">More than zero</span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Email</span>
-          <span class="detail-val">itsjayliketheletterj@mail.com</span>
+          <span class="detail-label">Best way to contact</span>
+          <span class="detail-val">Carrier pigeon, or message in a bottle</span>
         </div>
       </div>
     </div>
+  <div>
+  <div class="tag-cloud-title">Likes & Interests</div>
+  <div class="tag-cloud" style="margin-top: 20px;">
+    <span class="tag">Going out</span>
+    <span class="tag">Music</span>
+    <span class="tag">Food & drinks</span>
+    <span class="tag">Tech</span>
+    <span class="tag">Reading</span>
+  </div>
+</div>
   </div>
 </section>
 
@@ -560,17 +709,32 @@
       <p>Think of it as a little chain of strangers becoming slightly less strange. One card at a time.</p>
     </div>
     <div class="pif-cards">
-      <div class="mini-card">
+      <div class="mini-card" onclick="toggleCard(this)">
+        <div class="mini-card-header">
         <span>For a brave friend</span>
-        <span>→</span>
+          <span class="mini-card-arrow">→</span>
+        </div>
+        <div class="mini-card-body">
+          <div class="mini-card-body-inner">Play cupid. If you have someone in mind and you spot the perfect match, send them on their way.</div>
+        </div>
       </div>
-      <div class="mini-card">
+      <div class="mini-card" onclick="toggleCard(this)">
+        <div class="mini-card-header">
         <span>For a lucky someone</span>
-        <span>→</span>
+          <span class="mini-card-arrow">→</span>
+        </div>
+        <div class="mini-card-body">
+          <div class="mini-card-body-inner">Show someone you care. It's a small gesture, but it can go a long way.</div>
+        </div>
       </div>
-      <div class="mini-card">
+      <div class="mini-card" onclick="toggleCard(this)">
+        <div class="mini-card-header">
         <span>Pass it on</span>
-        <span>→</span>
+          <span class="mini-card-arrow">→</span>
+        </div>
+        <div class="mini-card-body">
+          <div class="mini-card-body-inner">Got nothing? Pass it on to someone who might.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -590,6 +754,12 @@
 </footer>
 
 <script>
+  // Accordion cards
+  function toggleCard(card) {
+    card.classList.toggle('open');
+  }
+
+  // Fade in on scroll
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -600,6 +770,17 @@
   }, { threshold: 0.12 });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Card option selection — one active per group, click to toggle within group
+  document.querySelectorAll('.card-option').forEach(option => {
+    option.addEventListener('click', () => {
+      const group = option.dataset.group;
+      document.querySelectorAll(`.card-option[data-group="${group}"]`).forEach(o => {
+        o.classList.remove('selected');
+      });
+      option.classList.add('selected');
+    });
+  });
 </script>
 </body>
 </html>
