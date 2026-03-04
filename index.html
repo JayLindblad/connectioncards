@@ -299,8 +299,9 @@
 
   .detail-row {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
     padding: 10px 0;
     border-bottom: 1px solid var(--rule);
     font-size: 11px;
@@ -308,7 +309,7 @@
 
   .detail-row:last-child { border-bottom: none; }
   .detail-label { color: var(--mid); letter-spacing: 0.1em; }
-  .detail-val { color: var(--ink); font-weight: 400; text-align: right; }
+  .detail-val { color: var(--ink); font-weight: 400; }
 
   /* ── PAY IT FORWARD ── */
   .pif-section {
