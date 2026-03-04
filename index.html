@@ -546,14 +546,14 @@
   <br><br>
   You're here because something happened. Someone handed you a small card. That someone was me.
   </p>
-  <a href="#the-card" class="scroll-hint">Here's the story</a>
+  <a class="scroll-hint">Here's the story</a>
   <div class="palm-hero">:) &nbsp; An opportunity awaits</div>
 </section>
 
 <hr>
 
 <!-- THE CARD -->
-<section class="section fade-in id="the-card">
+<section class="section fade-in" id="the-card">
   <div class="section-label">01 — The card</div>
   <div class="card-section">
     <div>
@@ -690,7 +690,7 @@
       </div>
     </div>
   <div>
-  <div class="tag-cloud-title">Likes & Interests</div>
+  <div class="tag-cloud-title" style="text-transform: uppercase;">Likes & Interests</div>
   <div class="tag-cloud" style="margin-top: 20px;">
     <span class="tag">Going out</span>
     <span class="tag">Music</span>
@@ -785,6 +785,12 @@
       option.classList.add('selected');
     });
   });
+  
+  document.querySelector('.scroll-hint').addEventListener('click', (e) => {
+  e.preventDefault();
+  const target = document.querySelector('#the-card');
+  target.scrollIntoView({ behavior: 'smooth' });
+});
 </script>
 </body>
 </html>
