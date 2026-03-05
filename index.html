@@ -24,7 +24,86 @@
     font-family: 'DM Mono', monospace;
     font-weight: 300;
     overflow-x: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
   }
+
+  [data-theme="dark"] {
+      --cream: #1a1612;
+      --ink: #f0ebe0;
+      --mid: #8a7e73;
+      --rule: #2e2a25;
+      --accent: #c4392f;
+    }
+
+    [data-theme="dark"] .mock-card {
+      background: #211e1a;
+      box-shadow: 4px 4px 0 #2e2a25;
+    }
+
+    [data-theme="dark"] .pif-section {
+      background: #0f0d0b;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 28px;
+      right: 48px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--mid);
+      background: none;
+      border: 1px solid var(--rule);
+      padding: 6px 14px;
+      cursor: pointer;
+      z-index: 100;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .theme-toggle:hover { color: var(--ink); border-color: var(--mid); }
+
+    [data-theme="dark"] .body-text {
+      color: #a89f94;
+    }
+
+    [data-theme="dark"] .mock-card-row {
+      border-bottom-color: #2e2a25;
+      color: #a89f94;
+    }
+
+    [data-theme="dark"] .mock-card-col-label {
+      color: #6a6058;
+    }
+
+    [data-theme="dark"] .mock-card-meta {
+      color: #6a6058;
+      border-bottom-color: #2e2a25;
+    }
+
+    [data-theme="dark"] .mock-card-meta strong {
+      color: var(--ink);
+    }
+
+    [data-theme="dark"] .card-option {
+      color: #6a6058;
+    }
+
+    [data-theme="dark"] .card-option:hover {
+      color: #a89f94;
+      border-color: #3a3530;
+    }
+
+    [data-theme="dark"] .card-option.selected {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    [data-theme="dark"] .mock-card-name-input {
+      border-bottom-color: #2e2a25;
+    }
+
+  
 
   /* grain */
   body::after {
@@ -52,9 +131,16 @@
     position: relative;
   }
 
-  .hero .card-option { color: var(--mid); }
-  .hero .card-option:hover { color: var(--ink); border-color: var(--rule); }
-  .hero .card-option.selected { color: var(--ink); border-color: var(--ink); }
+  .hero .card-option {color: var(--mid); }
+  .hero .card-option:hover {
+    color: var(--ink);
+    border-color: var(--rule);
+  }
+  
+  .hero .card-option.selected {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
 
   .hero-tag {
     font-size: 10px;
@@ -113,7 +199,7 @@
     50% { opacity: 1; transform: translateY(4px); }
   }
 
-  .palm-hero {
+  .watermark-hero {
     position: absolute;
     right: 48px;
     bottom: 0px;
@@ -423,19 +509,19 @@
     border: 1px solid #3a3530;
   }
 
-  .mini-card {
+  .accordion-card {
     border-bottom: 1px solid #3a3530;
     cursor: pointer;
     transition: background 0.2s;
     overflow: hidden;
   }
 
-  .mini-card:last-child { border-bottom: none; }
+  .accordion-card:last-child { border-bottom: none; }
 
-  .mini-card:hover { background: rgba(255,255,255,0.03); }
-  .mini-card.open  { background: rgba(255,255,255,0.04); }
+  .accordion-card:hover { background: rgba(255,255,255,0.03); }
+  .accordion-card.open  { background: rgba(255,255,255,0.04); }
 
-  .mini-card-header {
+  .accordion-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -448,10 +534,10 @@
     letter-spacing: 0.01em;
   }
 
-  .mini-card:hover .mini-card-header { color: var(--cream); }
-  .mini-card.open  .mini-card-header { color: var(--cream); }
+  .accordion-card:hover .accordion-card-header { color: var(--cream); }
+  .accordion-card.open  .accordion-card-header { color: var(--cream); }
 
-  .mini-card-arrow {
+  .accordion-card-arrow {
     font-size: 11px;
     font-family: 'DM Mono', monospace;
     font-style: normal;
@@ -462,10 +548,10 @@
     flex-shrink: 0;
   }
 
-  .mini-card:hover .mini-card-arrow { opacity: 1; }
-  .mini-card.open  .mini-card-arrow { transform: rotate(90deg); opacity: 1; }
+  .accordion-card:hover .accordion-card-arrow { opacity: 1; }
+  .accordion-card.open  .accordion-card-arrow { transform: rotate(90deg); opacity: 1; }
 
-  .mini-card-body {
+  .accordion-card-body {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease, padding 0.35s ease;
@@ -476,18 +562,18 @@
     letter-spacing: 0.02em;
   }
 
-  .mini-card.open .mini-card-body {
+  .accordion-card.open .accordion-card-body {
     max-height: 140px;
     padding: 0 24px 20px;
   }
 
-  .mini-card-body-inner {
+  .accordion-card-body-inner {
     border-top: 1px solid transparent;
     padding-top: 14px;
     transition: border-color 0.35s ease;
   }
 
-  .mini-card.open .mini-card-body-inner {
+  .accordion-card.open .accordion-card-body-inner {
     border-top: 1px solid #433d37;
     /* padding-top: 14px; */
   }
@@ -558,7 +644,7 @@
   You're here because something happened. Someone handed you a small card. That someone was me.
   </p>
   <a class="scroll-hint">Here's the story</a>
-  <div class="palm-hero">An opportunity awaits &nbsp; :)</div>
+  <div class="watermark-hero">An opportunity awaits &nbsp; :)</div>
 </section>
 
 <hr>
@@ -724,36 +810,38 @@
       <p>Think of it as a little chain of strangers becoming slightly less strange. One card at a time.</p>
     </div>
     <div class="pif-cards">
-      <div class="mini-card" onclick="toggleCard(this)">
-        <div class="mini-card-header">
+      <div class="accordion-card" onclick="toggleCard(this)">
+        <div class="accordion-card-header">
         <span>For a brave friend</span>
-          <span class="mini-card-arrow">→</span>
+          <span class="accordion-card-arrow">→</span>
         </div>
-        <div class="mini-card-body">
-          <div class="mini-card-body-inner">Play cupid. If you have someone in mind and you spot the perfect match, send them on their way.</div>
+        <div class="accordion-card-body">
+          <div class="accordion-card-body-inner">Play cupid. If you have someone in mind and you spot the perfect match, send them on their way.</div>
         </div>
       </div>
-      <div class="mini-card" onclick="toggleCard(this)">
-        <div class="mini-card-header">
+      <div class="accordion-card" onclick="toggleCard(this)">
+        <div class="accordion-card-header">
         <span>For a lucky duck</span>
-          <span class="mini-card-arrow">→</span>
+          <span class="accordion-card-arrow">→</span>
         </div>
-        <div class="mini-card-body">
-          <div class="mini-card-body-inner">Show someone you care. It's a small gesture, but it can go a long way.</div>
+        <div class="accordion-card-body">
+          <div class="accordion-card-body-inner">Show someone you care. It's a small gesture, but it can go a long way.</div>
         </div>
       </div>
-      <div class="mini-card" onclick="toggleCard(this)">
-        <div class="mini-card-header">
+      <div class="accordion-card" onclick="toggleCard(this)">
+        <div class="accordion-card-header">
         <span>For someone else</span>
-          <span class="mini-card-arrow">→</span>
+          <span class="accordion-card-arrow">→</span>
         </div>
-        <div class="mini-card-body">
-          <div class="mini-card-body-inner">Got nothing? Pass it on to someone who might.</div>
+        <div class="accordion-card-body">
+          <div class="accordion-card-body-inner">Got nothing? Pass it on to someone who might.</div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<button class="theme-toggle" onclick="toggleTheme()">Dark</button>
 
 <!-- FOOTER -->
 <footer>
@@ -777,6 +865,12 @@
   }
   updateTime();
   setInterval(updateTime, 1000);
+
+  function toggleTheme() {
+  const isDark = document.body.getAttribute('data-theme') === 'dark';
+  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-toggle').textContent = isDark ? 'Dark' : 'Light';
+  } 
 
   // Accordion cards
   function toggleCard(card) {
