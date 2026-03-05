@@ -116,7 +116,7 @@
   .palm-hero {
     position: absolute;
     right: 48px;
-    bottom: 80px;
+    bottom: 0px;
     font-size: 18px;
     opacity: 0.12;
     letter-spacing: 0.2em;
@@ -239,7 +239,7 @@
   .card-name-input {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 2em;
+    font-size: 3em;
     border: none;
     border-bottom: 1px solid #eee;
     outline: none;
@@ -250,6 +250,13 @@
     padding: 2px 0 4px;
     margin-top: 2px;
     transition: border-color 0.2s;
+    display: block;
+    word-break: break-all;
+  }
+
+  .card-name-input:empty::before {
+  content: attr(data-placeholder);
+  color: #ddd;
   }
 
   .card-name-input:focus { border-bottom-color: var(--accent); }
@@ -267,7 +274,11 @@
   }
 
   .mock-card-meta span { display: block; }
-  .mock-card-meta strong { color: var(--ink); font-weight: 400; font-size: 11px; }
+  .mock-card-meta strong {
+    color: var(--ink);
+    font-weight: 400;
+    font-size: 11px;
+  }
 
   /* ── WHY SECTION ── */
   .why-grid {
@@ -547,7 +558,7 @@
   You're here because something happened. Someone handed you a small card. That someone was me.
   </p>
   <a class="scroll-hint">Here's the story</a>
-  <div class="palm-hero">:) &nbsp; An opportunity awaits</div>
+  <div class="palm-hero">An opportunity awaits &nbsp; :)</div>
 </section>
 
 <hr>
@@ -581,7 +592,7 @@
             <span class="card-option selected" data-group="namemode">(My name is)</span>
             <span class="card-option" data-group="namemode">(My friend's name is)</span>
           </div>
-          <input class="card-name-input" type="text" value="Jay" placeholder="your name" maxlength="30" />
+          <span class="card-name-input" contenteditable="true" data-placeholder="your name">Jay</span>
         </div>
 
         <!-- Meta: time/place -->
@@ -758,6 +769,15 @@
 </footer>
 
 <script>
+
+  function updateTime() {
+  const now = new Date();
+  const timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' });
+  document.querySelector('.mock-card-meta strong').textContent = timeStr;
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+
   // Accordion cards
   function toggleCard(card) {
     card.classList.toggle('open');
