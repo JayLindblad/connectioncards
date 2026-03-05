@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script></head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>You got a card from Jay</title>
@@ -37,12 +37,13 @@
      --transition-speed:        global duration for theme fade transitions
   ============================================================ */
   :root {
-    --cream:                    #f4efe6;
+    --cream:                    #faf8f3;
     --ink:                      #1c1814;
     --mid:                      #9c9180;
     --mid-dark:                 #7c7264;
     --rule:                     #a69a86;
     --accent:                   #b8332a;
+    --accent-dark:              #56140f;
 
     --card-bg:                  #ffffff;
     --card-border:              #eeeeee;
@@ -119,6 +120,17 @@
     z-index: 999;
   }
 
+  .progress-bar {
+    position:   fixed;
+    top:        0;
+    left:       0;
+    width:      0%;
+    height:     2px;
+    background: var(--accent);
+    z-index:    1000;
+    transition: width 0.1s linear,
+                background var(--transition-speed) ease;
+  }
 
   /* ============================================================
      THEME TOGGLE BUTTON
@@ -400,12 +412,12 @@
 
   /* Flip out — current city rolls upward and away */
   .city-wrapper.flip-out strong {
-    animation: city-flip-out 0.15s ease-in forwards;
+    animation: city-flip-out 0.059s ease-in forwards;
   }
 
   /* Flip in — new city rolls in from below */
   .city-wrapper.flip-in strong {
-    animation: city-flip-in 0.15s ease-out forwards;
+    animation: city-flip-in 0.059s ease-out forwards;
   }
 
   @keyframes city-flip-out {
@@ -438,56 +450,43 @@
   }
 
   /* Position the option relative so the SVG circle can be absolutely placed over it */
-.card-option {
-  position: relative;
-  border: none; /* remove the existing border — the SVG replaces it */
-}
+  .card-option {
+    position: relative;
+    border: none;
+  }
 
 /* Hide the old selected border state since SVG handles it now */
-.card-option.selected {
-  border-color: transparent;
-}
+  .card-option.selected {
+    border-color: transparent;
+  }
 
-/* The SVG circle is injected via JS and sits absolutely over the pill */
-.card-option svg.circle-ring {
-  position:       absolute;
-  top:            -4px;
-  left:           -6px;
-  width:          calc(100% + 12px);
-  height:         calc(100% + 8px);
-  pointer-events: none;
-  overflow:       visible;
-}
+  .card-option svg.circle-ring {
+    position:       absolute;
+    top:            50%;
+    left:           50%;
+    transform:      translate(-50%, -50%);
+    width:          90%;
+    height:         130%;
+    pointer-events: none;
+    overflow:       visible;
+  }
 
-.card-option svg.circle-ring path {
-  fill:             none;
-  stroke:           var(--ink);
-  stroke-width:     1.5;
-  stroke-linecap:   round;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  transition:       stroke var(--transition-speed) ease;
-}
+  .card-option svg.circle-ring path {
+    fill:            none;
+    stroke:          var(--ink);
+    stroke-width:    12;
+    stroke-linecap:  round;
+    stroke-linejoin: round;
+    transition:      stroke var(--transition-speed) ease;
+  }
 
-/* When selected, animate the stroke drawing in */
-.card-option.selected svg.circle-ring path {
-  animation: draw-circle 0.5s ease forwards;
-}
+  @keyframes draw-circle {
+    to { stroke-dashoffset: 0; }
+  }
 
-/* When deselected, animate the stroke drawing out */
-.card-option.deselecting svg.circle-ring path {
-  animation: undraw-circle 0.3s ease forwards;
-}
-
-@keyframes draw-circle {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes undraw-circle {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: 1000; }
-}
-
+  @keyframes undraw-circle {
+    to { stroke-dashoffset: var(--path-length); }
+  }
   /* Hovered pill — slightly more visible */
   .card-option:hover {
     color:        var(--card-option-hover);
@@ -557,6 +556,30 @@
     transition:  color var(--transition-speed) ease;
   }
 
+  .copy-link-btn {
+    font-family:    'DM Mono', monospace;
+    font-size:      9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color:          var(--card-meta-color);
+    background:     none;
+    border:         1px solid var(--card-border);
+    padding:        4px 10px;
+    cursor:         pointer;
+    margin-top:     8px;
+    align-self:     flex-start;
+    transition:     color        var(--transition-speed) ease,
+                    border-color var(--transition-speed) ease;
+  }
+
+  .copy-link-btn:hover { color: var(--ink); border-color: var(--mid); }
+
+  /* Confirmation state */
+  .copy-link-btn.copied {
+    color:        var(--accent);
+    border-color: var(--accent);
+  }
+
 
   /* ============================================================
      WHY SECTION (02)
@@ -598,7 +621,7 @@
 
   .why-item p {
     font-size:  12px;
-    color:      var(--mid);
+    color:      var(--mid-dark);
     line-height: 1.9;
     transition: color var(--transition-speed) ease;
   }
@@ -940,7 +963,7 @@
 </style>
 </head>
 <body>
-
+<div class="progress-bar"></div>
 <!-- <button class="theme-toggle" onclick="toggleTheme()">Dark</button> -->
 
 <!-- HERO -->
@@ -1034,6 +1057,7 @@
             <span class="card-option" data-group="timing">(one day.)</span>
           </div>
           <span style="color: var(--card-meta-color); margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
+          <button class="copy-link-btn" onclick="copyCardLink()">Share</button>
         </div>
 
       </div>
@@ -1096,7 +1120,7 @@
         </div>
         <div class="detail-row">
           <span class="detail-label">Best way to contact</span>
-          <span class="detail-val">Carrier pigeon, or message in a bottle</span>
+          <span class="detail-val">Carrier pigeon or message in a bottle</span>
         </div>
       </div>
     </div>
@@ -1185,9 +1209,18 @@
     });
     document.querySelector('.mock-card-meta strong').textContent = timeStr;
   }
-  updateTime();
-  setInterval(updateTime, 1000);
 
+  // ── PAGE PROGRESS BAR ────────────────────────────────────────
+  // Fills a thin accent-colored line at the top of the viewport
+  // proportional to how far down the page the user has scrolled.
+  const progressBar = document.querySelector('.progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop    = window.scrollY;
+    const docHeight    = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled     = (scrollTop / docHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  });   
 
   // ── THEME TOGGLE ─────────────────────────────────────────────
   // Reads the current data-theme on <body>, flips it between
@@ -1251,20 +1284,85 @@
 
 
   // Inject an SVG circle ring into every card option on load
+  const CIRCLE_PATH = 'M947.08,114.9c-52.08-65.16-154.54-95.42-254.7-107.12C451.86-20.33,238.4,29.52,104.28,129.11,60.44,161.66,13.34,205.99,2.62,269.02c-13.02,76.57,24.51,135.14,67.77,169.44,46.58,36.92,111.19,56.58,180.37,66.67,6.93-1.38-4.49-1.37-3.28-1.09-44.99-10.35-94.74-23.4-122.43-44.83,65.31,34.12,162.42,37.18,257.98,37.17,98.08,0,191.14-7.89,267.81-27.33,112.1-28.41,214.4-82.53,279.84-162.87,22.13-27.16,44.21-62.59,47-101.66,2.62-36.56-13.08-67.7-30.61-89.63Z';
+
+  // Measure path length using a temporary off-screen SVG
+  function getPathLength(d) {
+    const tempSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    tempSvg.style.cssText = 'position:absolute;visibility:hidden;width:0;height:0';
+    const tempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    tempPath.setAttribute('d', d);
+    tempSvg.appendChild(tempPath);
+    document.body.appendChild(tempSvg);
+    const length = tempPath.getTotalLength();
+    document.body.removeChild(tempSvg);
+    return length;
+  }
+
+  const PATH_LENGTH = getPathLength(CIRCLE_PATH);
+
+  // Inject SVG into every card option
   document.querySelectorAll('.card-option').forEach(option => {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.classList.add('circle-ring');
-    svg.setAttribute('viewBox', '0 0 100 40');
+    svg.setAttribute('viewBox', '0 0 977.97 505.14');
     svg.setAttribute('preserveAspectRatio', 'none');
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    // Hand-drawn wobbly loop — slightly uneven, overshoots at the ends
-    path.setAttribute('d', 'M 8,20 C 6,8 18,2 35,2 C 55,1 80,1 88,4 C 98,8 98,18 96,26 C 93,34 80,38 60,38 C 40,39 15,37 8,30 C 3,25 5,18 8,20 Z');
-    path.setAttribute('stroke-linecap', 'round');
-    path.setAttribute('stroke-linejoin', 'round');
+    path.setAttribute('d', CIRCLE_PATH);
+    path.style.strokeDasharray  = PATH_LENGTH;
+    path.style.strokeDashoffset = PATH_LENGTH;
+    path.style.setProperty('--path-length', PATH_LENGTH);
 
     svg.appendChild(path);
     option.appendChild(svg);
+  });
+
+  // Draw circles on pre-selected options on page load
+  document.querySelectorAll('.card-option.selected').forEach(option => {
+    const path = option.querySelector('path');
+    path.style.animationName           = 'draw-circle';
+    path.style.animationDuration       = '0.6s';
+    path.style.animationTimingFunction = 'ease';
+    path.style.animationFillMode       = 'forwards';
+  });
+  
+  // Selection with draw/undraw animations
+  document.querySelectorAll('.card-option').forEach(option => {
+    option.addEventListener('click', () => {
+      const group = option.dataset.group;
+      const current = document.querySelector(`.card-option.selected[data-group="${group}"]`);
+
+      if (current && current !== option) {
+        const currentPath = current.querySelector('path');
+        current.classList.remove('selected');
+        current.classList.add('deselecting');
+        currentPath.style.animation = 'none';
+        requestAnimationFrame(() => {
+          currentPath.style.animation = '';
+          currentPath.style.animationName = 'undraw-circle';
+          currentPath.style.animationDuration = '0.3s';
+          currentPath.style.animationFill = 'forwards';
+          current.addEventListener('animationend', () => {
+            current.classList.remove('deselecting');
+            currentPath.style.strokeDashoffset = PATH_LENGTH;
+            currentPath.style.animation = 'none';
+          }, { once: true });
+        });
+      }
+
+      // Draw new circle
+      const newPath = option.querySelector('path');
+      option.classList.add('selected');
+      newPath.style.animation = 'none';
+      requestAnimationFrame(() => {
+        newPath.style.animation = '';
+        newPath.style.animationName = 'draw-circle';
+        newPath.style.animationDuration = '0.6s';
+        newPath.style.animationTimingFunction = 'ease';
+        newPath.style.animationFillMode = 'forwards';
+      });
+    });
   });
 
   // ── CITY RANDOMIZER ──────────────────────────────────────────
@@ -1283,28 +1381,27 @@
   const cityEl = cityWrapper.querySelector('strong');
 
   cityWrapper.addEventListener('click', () => {
-    // Don't trigger if already animating
-    if (cityWrapper.classList.contains('flip-out')) return;
+  // Don't trigger if already animating
+  if (cityWrapper.classList.contains('flip-out') || 
+      cityWrapper.classList.contains('flip-in')) return;
 
-    const current = cityEl.textContent;
-    const options = cities.filter(c => c !== current);
-    const next = options[Math.floor(Math.random() * options.length)];
+  const current = cityEl.textContent;
+  const options = cities.filter(c => c !== current);
+  const next = options[Math.floor(Math.random() * options.length)];
 
-    // Flip current city out
-    cityWrapper.classList.add('flip-out');
+  cityWrapper.classList.add('flip-out');
+
+  cityWrapper.addEventListener('animationend', () => {
+    cityWrapper.classList.remove('flip-out');
+    cityEl.textContent = next;
+    cityWrapper.classList.add('flip-in');
 
     cityWrapper.addEventListener('animationend', () => {
-      cityWrapper.classList.remove('flip-out');
-      // Update text and flip new city in
-      cityEl.textContent = next;
-      cityWrapper.classList.add('flip-in');
-
-      cityWrapper.addEventListener('animationend', () => {
-        cityWrapper.classList.remove('flip-in');
-      }, { once: true });
-
+      cityWrapper.classList.remove('flip-in');
     }, { once: true });
-  });
+
+  }, { once: true });
+});
 
   // Handle selection with draw/undraw animations
   document.querySelectorAll('.card-option').forEach(option => {
@@ -1327,6 +1424,72 @@
     });
   });
 
+  // ── SHARE CARD ───────────────────────────────────────────────
+  // Screenshots the mock card using html2canvas, then opens
+  // the native share sheet with the image attached.
+  // Falls back to downloading the image if Web Share isn't supported.
+  async function shareCard() {
+    const btn  = document.querySelector('.copy-link-btn');
+    const card = document.querySelector('.mock-card');
+
+    btn.textContent = 'Generating...';
+    btn.classList.add('copied');
+
+    try {
+      // Temporarily straighten the card for the screenshot
+      const originalTransform = card.style.transform;
+      card.style.transform = 'none';
+
+      const canvas = await html2canvas(card, {
+        backgroundColor: getComputedStyle(document.documentElement)
+                          .getPropertyValue('--card-bg').trim() || '#ffffff',
+        scale:   2,      // retina quality
+        useCORS: true,
+        logging: false,
+        // Hide the SVG circles and buttons from the screenshot
+        ignoreElements: el =>
+          el.classList.contains('circle-ring') ||
+          el.classList.contains('copy-link-btn') ||
+          el.classList.contains('print-card-btn')
+      });
+
+      // Restore rotation
+      card.style.transform = originalTransform;
+
+      canvas.toBlob(async (blob) => {
+        const file = new File([blob], 'connection-card.png', { type: 'image/png' });
+
+        if (navigator.share && navigator.canShare({ files: [file] })) {
+          // Native share sheet — works on mobile and some desktop browsers
+          await navigator.share({
+            title: 'Connection Card',
+            text:  'Someone sent you a connection card.',
+            files: [file]
+          });
+        } else {
+          // Fallback — download the image directly
+          const url  = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href     = url;
+          link.download = 'connection-card.png';
+          link.click();
+          URL.revokeObjectURL(url);
+        }
+
+        btn.textContent = 'Shared!';
+        setTimeout(() => {
+          btn.textContent = 'Share card';
+          btn.classList.remove('copied');
+        }, 2000);
+
+      }, 'image/png');
+
+    } catch (err) {
+      console.error('Share failed:', err);
+      btn.textContent = 'Share card';
+      btn.classList.remove('copied');
+    }
+  }
 
   // ── SCROLL TO FIRST SECTION ──────────────────────────────────
   // Clicking the scroll hint smoothly scrolls to #the-card.
