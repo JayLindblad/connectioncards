@@ -382,6 +382,38 @@
     transition: color var(--transition-speed) ease;
   }
 
+  /* Wrapper needed to contain the flip animation */
+  .city-wrapper {
+    display:     inline-block;
+    overflow:    hidden;
+    cursor:      pointer;
+  }
+
+  .city-wrapper strong {
+    display: inline-block;
+    transition: none;
+  }
+
+  /* Flip out — current city rolls upward and away */
+  .city-wrapper.flip-out strong {
+    animation: city-flip-out 0.15s ease-in forwards;
+  }
+
+  /* Flip in — new city rolls in from below */
+  .city-wrapper.flip-in strong {
+    animation: city-flip-in 0.15s ease-out forwards;
+  }
+
+  @keyframes city-flip-out {
+    0%   { transform: translateY(0)     rotateX(0deg);   opacity: 1; }
+    100% { transform: translateY(-60%)  rotateX(90deg);  opacity: 0; }
+  }
+
+  @keyframes city-flip-in {
+    0%   { transform: translateY(60%)   rotateX(-90deg); opacity: 0; }
+    100% { transform: translateY(0)     rotateX(0deg);   opacity: 1; }
+  }
+
   /* Wrapping flex container for groups of selectable pill options */
   .card-options-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
 
@@ -508,6 +540,7 @@
     border-bottom:         1px solid var(--card-border);
     transition:            color        var(--transition-speed) ease,
                            border-color var(--transition-speed) ease;
+    perspective:           400px;
   }
 
   .mock-card-meta span { display: block; }
@@ -962,7 +995,7 @@
         <!-- Metadata: live clock + location -->
         <div class="mock-card-meta">
           <div><span>Time</span><strong>—</strong></div>
-          <div><span>Place</span><strong>Philadelphia</strong></div>
+          <div><span>Place</span><div class="city-wrapper"><strong>Philadelphia</strong></div></div>
         </div>
 
         <!-- Row 3: Compliment selection -->
@@ -1201,6 +1234,7 @@
   // siblings in the same data-group, then add .selected to the
   // clicked element. Works across both the hero greeting group
   // and all mock card option groups via the shared data-group attribute.
+
   // document.querySelectorAll('.card-option').forEach(option => {
   //   option.addEventListener('click', () => {
   //     const group = option.dataset.group;
@@ -1227,6 +1261,45 @@
 
     svg.appendChild(path);
     option.appendChild(svg);
+  });
+
+  // ── CITY RANDOMIZER ──────────────────────────────────────────
+  // Clicking the city text cycles to a random major US city.
+  // Philadelphia is the default on page load.
+  const cities = [
+    'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix',
+    'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin',
+    'Jacksonville', 'Fort Worth', 'Columbus', 'Charlotte', 'Indianapolis',
+    'San Francisco', 'Seattle', 'Denver', 'Nashville', 'Boston',
+    'Las Vegas', 'Portland', 'Memphis', 'Atlanta', 'Miami',
+    'New Orleans', 'Minneapolis', 'Detroit', 'Baltimore', 'Kansas City'
+  ];
+
+  const cityWrapper = document.querySelector('.city-wrapper');
+  const cityEl = cityWrapper.querySelector('strong');
+
+  cityWrapper.addEventListener('click', () => {
+    // Don't trigger if already animating
+    if (cityWrapper.classList.contains('flip-out')) return;
+
+    const current = cityEl.textContent;
+    const options = cities.filter(c => c !== current);
+    const next = options[Math.floor(Math.random() * options.length)];
+
+    // Flip current city out
+    cityWrapper.classList.add('flip-out');
+
+    cityWrapper.addEventListener('animationend', () => {
+      cityWrapper.classList.remove('flip-out');
+      // Update text and flip new city in
+      cityEl.textContent = next;
+      cityWrapper.classList.add('flip-in');
+
+      cityWrapper.addEventListener('animationend', () => {
+        cityWrapper.classList.remove('flip-in');
+      }, { once: true });
+
+    }, { once: true });
   });
 
   // Handle selection with draw/undraw animations
