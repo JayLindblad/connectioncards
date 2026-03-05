@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script></head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>You got a card from Jay</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700" rel="stylesheet">
-<style>
-
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You got a card from Jay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700" rel="stylesheet">
+  <style>
+</head>
   /* ============================================================
      RESET
      Removes default browser margin, padding, and ensures
@@ -580,6 +581,39 @@
     border-color: var(--accent);
   }
 
+  .print-card-btn {
+    font-family:    'DM Mono', monospace;
+    font-size:      9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color:          var(--card-meta-color);
+    background:     none;
+    border:         1px solid var(--card-border);
+    padding:        4px 10px;
+    cursor:         pointer;
+    margin-top:     8px;
+    align-self:     flex-start;
+    transition:     color        var(--transition-speed) ease,
+                    border-color var(--transition-speed) ease;
+  }
+
+  .print-card-btn:hover { color: var(--ink); border-color: var(--mid); }
+
+  /* Print styles — hides everything except the mock card */
+  @media print {
+    body > *:not(.print-target) { display: none !important; }
+    .print-target {
+      display:    block !important;
+      position:   static !important;
+      transform:  none !important;
+      box-shadow: none !important;
+      border:     1px solid #ccc !important;
+      padding:    28px !important;
+      font-family: 'DM Mono', monospace;
+    }
+    .print-card-btn, .copy-link-btn, svg.circle-ring { display: none !important; }
+  }
+
 
   /* ============================================================
      WHY SECTION (02)
@@ -1057,7 +1091,7 @@
             <span class="card-option" data-group="timing">(one day.)</span>
           </div>
           <span style="color: var(--card-meta-color); margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
-          <button class="copy-link-btn" onclick="copyCardLink()">Share</button>
+          <button class="copy-link-btn" onclick="shareCard()">Share</button>
         </div>
 
       </div>
@@ -1209,6 +1243,8 @@
     });
     document.querySelector('.mock-card-meta strong').textContent = timeStr;
   }
+  updateTime();
+  setInterval(updateTime, 1000);
 
   // ── PAGE PROGRESS BAR ────────────────────────────────────────
   // Fills a thin accent-colored line at the top of the viewport
@@ -1490,6 +1526,8 @@
       btn.classList.remove('copied');
     }
   }
+
+
 
   // ── SCROLL TO FIRST SECTION ──────────────────────────────────
   // Clicking the scroll hint smoothly scrolls to #the-card.
