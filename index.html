@@ -392,7 +392,7 @@
     cursor:         pointer;
     padding:        1px 8px;
     border-radius:  50px;
-    border:         1px solid transparent;
+    /* border:         1px solid transparent; */
     color:          var(--card-option-color);
     transition:     color        0.15s,
                     border-color 0.15s;
@@ -400,6 +400,57 @@
     white-space:    nowrap;
     font-size:      11px;
   }
+
+  /* Position the option relative so the SVG circle can be absolutely placed over it */
+.card-option {
+  position: relative;
+  border: none; /* remove the existing border — the SVG replaces it */
+}
+
+/* Hide the old selected border state since SVG handles it now */
+.card-option.selected {
+  border-color: transparent;
+}
+
+/* The SVG circle is injected via JS and sits absolutely over the pill */
+.card-option svg.circle-ring {
+  position:       absolute;
+  top:            -4px;
+  left:           -6px;
+  width:          calc(100% + 12px);
+  height:         calc(100% + 8px);
+  pointer-events: none;
+  overflow:       visible;
+}
+
+.card-option svg.circle-ring path {
+  fill:             none;
+  stroke:           var(--ink);
+  stroke-width:     1.5;
+  stroke-linecap:   round;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition:       stroke var(--transition-speed) ease;
+}
+
+/* When selected, animate the stroke drawing in */
+.card-option.selected svg.circle-ring path {
+  animation: draw-circle 0.5s ease forwards;
+}
+
+/* When deselected, animate the stroke drawing out */
+.card-option.deselecting svg.circle-ring path {
+  animation: undraw-circle 0.3s ease forwards;
+}
+
+@keyframes draw-circle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes undraw-circle {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: 1000; }
+}
 
   /* Hovered pill — slightly more visible */
   .card-option:hover {
@@ -409,7 +460,7 @@
 
   /* Selected pill — full ink color with a visible border ring */
   .card-option.selected {
-    border-color: var(--ink);
+    /* border-color: var(--ink); */
     color:        var(--ink);
     font-weight:  400;
   }
@@ -1150,12 +1201,51 @@
   // siblings in the same data-group, then add .selected to the
   // clicked element. Works across both the hero greeting group
   // and all mock card option groups via the shared data-group attribute.
+  // document.querySelectorAll('.card-option').forEach(option => {
+  //   option.addEventListener('click', () => {
+  //     const group = option.dataset.group;
+  //     document.querySelectorAll(`.card-option[data-group="${group}"]`).forEach(o => {
+  //       o.classList.remove('selected');
+  //     });
+  //     option.classList.add('selected');
+  //   });
+  // });
+
+
+  // Inject an SVG circle ring into every card option on load
+  document.querySelectorAll('.card-option').forEach(option => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.classList.add('circle-ring');
+    svg.setAttribute('viewBox', '0 0 100 40');
+    svg.setAttribute('preserveAspectRatio', 'none');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    // Hand-drawn wobbly loop — slightly uneven, overshoots at the ends
+    path.setAttribute('d', 'M 8,20 C 6,8 18,2 35,2 C 55,1 80,1 88,4 C 98,8 98,18 96,26 C 93,34 80,38 60,38 C 40,39 15,37 8,30 C 3,25 5,18 8,20 Z');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('stroke-linejoin', 'round');
+
+    svg.appendChild(path);
+    option.appendChild(svg);
+  });
+
+  // Handle selection with draw/undraw animations
   document.querySelectorAll('.card-option').forEach(option => {
     option.addEventListener('click', () => {
       const group = option.dataset.group;
-      document.querySelectorAll(`.card-option[data-group="${group}"]`).forEach(o => {
-        o.classList.remove('selected');
-      });
+
+      // Trigger undraw on the currently selected option in this group
+      const current = document.querySelector(`.card-option.selected[data-group="${group}"]`);
+      if (current && current !== option) {
+        current.classList.add('deselecting');
+        current.classList.remove('selected');
+        // Clean up the deselecting class after the animation finishes
+        current.addEventListener('animationend', () => {
+          current.classList.remove('deselecting');
+        }, { once: true });
+      }
+
+      // Draw the circle on the newly selected option
       option.classList.add('selected');
     });
   });
