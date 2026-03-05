@@ -1494,16 +1494,22 @@
 
       canvas.toBlob(async (blob) => {
         const file = new File([blob], 'connection-card.png', { type: 'image/png' });
-
-        if (navigator.share && navigator.canShare({ files: [file] })) {
-          // Native share sheet — works on mobile and some desktop browsers
-          await navigator.share({
-            title: 'Connection Card',
-            text:  'Someone sent you a connection card.',
-            files: [file]
-          });
+      
+        const canShare = navigator.share && navigator.canShare && navigator.canShare({ files: [file] });
+      
+        if (canShare) {
+          try {
+            await navigator.share({
+              title: 'Connection Card',
+              text:  'Someone sent you a connection card.',
+              files: [file]
+            });
+          } catch (err) {
+            // User dismissed the share sheet — not a real error
+            if (err.name !== 'AbortError') console.error('Share failed:', err);
+          }
         } else {
-          // Fallback — download the image directly
+          // Fallback for Chrome iOS and unsupported browsers — download directly
           const url  = URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href     = url;
@@ -1511,13 +1517,13 @@
           link.click();
           URL.revokeObjectURL(url);
         }
-
+      
         btn.textContent = 'Shared!';
         setTimeout(() => {
-          btn.textContent = 'Share card';
+          btn.textContent = 'Share';
           btn.classList.remove('copied');
         }, 2000);
-
+      
       }, 'image/png');
 
     } catch (err) {
