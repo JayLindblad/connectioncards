@@ -52,6 +52,7 @@
     --card-option-border-hover: #dddddd;
     --body-text-color:          #3d3530;
     --shadow-color:             #d9d0c0;
+    --lift: rgba(0, 0, 0, 0.2);
 
     --transition-speed:         0.4s;
   }
@@ -66,8 +67,8 @@
   [data-theme="dark"] {
     --cream:                    #1a1612;
     --ink:                      #f0ebe0;
-    --mid:                      #a69789;
-    --mid-dark:                 #877a66;
+    --mid:                      #6d5d4f;
+    --mid-dark:                 #a79985;
     --rule:                     #7c7265;
     --accent:                   #c4392f;
 
@@ -79,6 +80,7 @@
     --card-option-border-hover: #3a3530;
     --body-text-color:          #a89f94;
     --shadow-color:             #2e2a25;
+    --lift: rgba(255, 255, 255, 0.2);
   }
 
 
@@ -767,8 +769,8 @@
   .accordion-card:last-child { border-bottom: none; }
 
   /* Subtle background lift on hover and when open */
-  .accordion-card:hover { background: rgba(255,255,255,0.03); }
-  .accordion-card.open  { background: rgba(255,255,255,0.04); }
+  .accordion-card:hover { background: var(--lift); }
+  .accordion-card.open  { background: var(--lift); }
 
   /* Header row — italic Playfair title and rotating arrow */
   .accordion-card-header {
