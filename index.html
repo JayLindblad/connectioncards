@@ -6,106 +6,106 @@
 <title>You got a card from Jay</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700" rel="stylesheet">
 <style>
+
+  /* ============================================================
+     RESET
+     Removes default browser margin, padding, and ensures
+     consistent box-sizing across all elements.
+  ============================================================ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+
+  /* ============================================================
+     DESIGN TOKENS — LIGHT MODE
+     All colors are defined here as CSS custom properties.
+     Every color reference in the stylesheet uses these variables
+     so that swapping themes only requires overriding this block.
+
+     --cream:                   main page background
+     --ink:                     primary text and foreground
+     --mid:                     secondary / muted text
+     --rule:                    borders and dividers
+     --accent:                  red highlight for headings, labels, links
+     --card-bg:                 mock card background
+     --card-border:             borders inside the mock card
+     --card-meta-color:         muted label color inside mock card metadata
+     --card-option-color:       default unselected pill color
+     --card-option-hover:       hovered pill text color
+     --card-option-border-hover: hovered pill border color
+     --body-text-color:         body paragraph text color
+     --shadow-color:            offset box-shadow on the mock card
+     --transition-speed:        global duration for theme fade transitions
+  ============================================================ */
   :root {
-    --cream: #f4efe6;
-    --ink: #1c1814;
-    --mid: #7a6e63;
-    --rule: #d9d0c0;
-    --accent: #b8332a;
+    --cream:                    #f4efe6;
+    --ink:                      #1c1814;
+    --mid:                      #beb2a0;
+    --rule:                     #a69a86;
+    --accent:                   #b8332a;
+
+    --card-bg:                  #ffffff;
+    --card-border:              #eeeeee;
+    --card-meta-color:          #888888;
+    --card-option-color:        #bbbbbb;
+    --card-option-hover:        #888888;
+    --card-option-border-hover: #dddddd;
+    --body-text-color:          #3d3530;
+    --shadow-color:             #d9d0c0;
+
+    --transition-speed:         0.4s;
   }
 
+
+  /* ============================================================
+     DESIGN TOKENS — DARK MODE
+     Applied when <body data-theme="dark"> is set via JS.
+     Only overrides the variables that need to change —
+     everything else inherits from :root automatically.
+  ============================================================ */
+  [data-theme="dark"] {
+    --cream:                    #1a1612;
+    --ink:                      #f0ebe0;
+    --mid:                      #a69789;
+    --rule:                     #7c7265;
+    --accent:                   #c4392f;
+
+    --card-bg:                  #211e1a;
+    --card-border:              #2e2a25;
+    --card-meta-color:          #e6d6c9;
+    --card-option-color:        #93887f;
+    --card-option-hover:        #a89f94;
+    --card-option-border-hover: #3a3530;
+    --body-text-color:          #a89f94;
+    --shadow-color:             #2e2a25;
+  }
+
+
+  /* ============================================================
+     BASE — HTML & BODY
+     Smooth scrolling on html enables anchor-link and
+     scrollIntoView animations. Body sets the global background,
+     text color, font, and transitions for the theme fade.
+  ============================================================ */
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--cream);
-    color: var(--ink);
+    background:  var(--cream);
+    color:       var(--ink);
     font-family: 'DM Mono', monospace;
     font-weight: 300;
-    overflow-x: hidden;
-    transition: background 0.4s ease, color 0.4s ease;
+    overflow-x:  hidden;
+    transition:  background var(--transition-speed) ease,
+                 color      var(--transition-speed) ease;
   }
 
-  [data-theme="dark"] {
-      --cream: #1a1612;
-      --ink: #f0ebe0;
-      --mid: #8a7e73;
-      --rule: #2e2a25;
-      --accent: #c4392f;
-    }
 
-    [data-theme="dark"] .mock-card {
-      background: #211e1a;
-      box-shadow: 4px 4px 0 #2e2a25;
-    }
-
-    [data-theme="dark"] .pif-section {
-      background: #0f0d0b;
-    }
-
-    .theme-toggle {
-      position: fixed;
-      top: 28px;
-      right: 48px;
-      font-family: 'DM Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--mid);
-      background: none;
-      border: 1px solid var(--rule);
-      padding: 6px 14px;
-      cursor: pointer;
-      z-index: 100;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .theme-toggle:hover { color: var(--ink); border-color: var(--mid); }
-
-    [data-theme="dark"] .body-text {
-      color: #a89f94;
-    }
-
-    [data-theme="dark"] .mock-card-row {
-      border-bottom-color: #2e2a25;
-      color: #a89f94;
-    }
-
-    [data-theme="dark"] .mock-card-col-label {
-      color: #6a6058;
-    }
-
-    [data-theme="dark"] .mock-card-meta {
-      color: #6a6058;
-      border-bottom-color: #2e2a25;
-    }
-
-    [data-theme="dark"] .mock-card-meta strong {
-      color: var(--ink);
-    }
-
-    [data-theme="dark"] .card-option {
-      color: #6a6058;
-    }
-
-    [data-theme="dark"] .card-option:hover {
-      color: #a89f94;
-      border-color: #3a3530;
-    }
-
-    [data-theme="dark"] .card-option.selected {
-      color: var(--ink);
-      border-color: var(--ink);
-    }
-
-    [data-theme="dark"] .mock-card-name-input {
-      border-bottom-color: #2e2a25;
-    }
-
-  
-
-  /* grain */
+  /* ============================================================
+     GRAIN OVERLAY
+     A fixed pseudo-element sitting above all content (z-999)
+     overlaying a faint SVG fractal noise texture across the
+     entire viewport for a subtle paper/analog feel.
+     pointer-events: none ensures it never blocks clicks.
+  ============================================================ */
   body::after {
     content: '';
     position: fixed;
@@ -115,533 +115,761 @@
     z-index: 999;
   }
 
+
+  /* ============================================================
+     THEME TOGGLE BUTTON
+     Fixed to the top-right corner of the viewport.
+     Uses CSS variables so it automatically adapts to both themes.
+     z-index: 100 keeps it above page content but below the grain.
+  ============================================================ */
+  .theme-toggle {
+  background:     var(--cream);
+  color:          var(--ink);
+  border:         1px solid var(--rule);
+  font-family:    'DM Mono', monospace;
+  font-size:      10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding:        6px 14px;
+  cursor:         pointer;
+  transition:     color         var(--transition-speed) ease,
+                  border-color  var(--transition-speed) ease,
+                  background    var(--transition-speed) ease;
+  }
+
+  /* Brightens label and border on hover */
+  .theme-toggle:hover {
+  color:        var(--ink);
+  border-color: var(--mid);
+  }
+
+
+  /* ============================================================
+     SCROLL HINT LINK
+     The "Here's the story ↓" anchor at the bottom of the hero.
+     Strips default link underline; the ↓ arrow and bounce
+     animation are added via the .scroll-hint class below.
+  ============================================================ */
   a.scroll-hint {
-  text-decoration: none;
-  cursor: pointer;
+    text-decoration: none;
+    cursor: pointer;
   }
-  /* ── HERO ── */
+
+
+  /* ============================================================
+     HERO SECTION
+     Full-viewport-height flex column. Centers content vertically.
+     Max-width and auto margins keep it aligned with the rest
+     of the page's content column.
+     position: relative is needed for .watermark-hero positioning.
+  ============================================================ */
   .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    min-height:      100vh;
+    display:         flex;
+    flex-direction:  column;
     justify-content: center;
-    padding: 80px 48px;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
+    padding:         80px 48px;
+    max-width:       900px;
+    margin:          0 auto;
+    position:        relative;
   }
 
-  .hero .card-option {color: var(--mid); }
-  .hero .card-option:hover {
-    color: var(--ink);
-    border-color: var(--rule);
-  }
-  
-  .hero .card-option.selected {
-    color: var(--ink);
-    border-color: var(--ink);
-  }
-
+  /* Small uppercase label at the top of the hero with a ruled line after it */
   .hero-tag {
-    font-size: 10px;
+    font-size:      10px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 56px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  .hero-tag::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--rule);
-    max-width: 120px;
+    color:          var(--mid);
+    margin-bottom:  56px;
+    display:        flex;
+    align-items:    center;
+    gap:            16px;
+    transition:     color var(--transition-speed) ease;
   }
 
+  /* Horizontal rule line generated after the hero-tag text */
+  .hero-tag::after { display: none; }
+
+  .hero-tag-rule {
+    flex:       1;
+    height:     1px;
+    background: var(--rule);
+    transition: background var(--transition-speed) ease;
+  }
+
+  /* Large fluid serif headline — clamp() scales between 48px and 96px */
   .hero h1 {
-    font-family: 'EB Garamond', serif;
-    font-size: clamp(48px, 9vw, 96px);
-    font-weight: 400;
-    line-height: 1.0;
+    font-family:   'EB Garamond', serif;
+    font-size:     clamp(48px, 9vw, 96px);
+    font-weight:   400;
+    line-height:   1.0;
     margin-bottom: 32px;
   }
 
+  /* Italic red emphasis within the hero headline */
   .hero h1 em {
     font-style: italic;
-    color: var(--accent);
+    color:      var(--accent);
   }
 
+  /* Muted subtitle text below the headline */
   .hero-sub {
-    font-size: 12px;
+    font-size:      12px;
     letter-spacing: 0.15em;
-    color: var(--mid);
-    max-width: 440px;
-    line-height: 2;
-    margin-bottom: 64px;
+    color:          var(--mid);
+    max-width:      440px;
+    line-height:    2;
+    margin-bottom:  64px;
+    transition:     color var(--transition-speed) ease;
   }
 
+  /* Hero-context overrides for .card-option pills.
+     The hero sits on --cream so we use --mid / --ink
+     instead of the mock card's internal grays. */
+  .hero .card-option              { color: var(--mid); }
+  .hero .card-option:hover        { color: var(--ink); border-color: var(--rule); }
+  .hero .card-option.selected     { color: var(--ink); border-color: var(--ink); }
+
+  /* Animated scroll prompt. Bounces gently via fadeup keyframes.
+     The ↓ arrow is injected via ::before content. */
   .scroll-hint {
-    font-size: 10px;
+    font-size:      10px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--mid);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    animation: fadeup 2s ease infinite;
+    color:          var(--mid);
+    display:        flex;
+    align-items:    center;
+    gap:            12px;
+    animation:      fadeup 2s ease infinite;
+    transition:     color var(--transition-speed) ease;
   }
+
   .scroll-hint::before { content: '↓'; font-size: 14px; }
 
+  /* Keyframes for the scroll hint bounce */
   @keyframes fadeup {
     0%, 100% { opacity: 0.4; transform: translateY(0); }
-    50% { opacity: 1; transform: translateY(4px); }
+    50%       { opacity: 1;   transform: translateY(4px); }
   }
 
+  /* Faint vertical watermark in the bottom-right of the hero.
+     writing-mode rotates it 90°. Low opacity keeps it textural. */
   .watermark-hero {
-    position: absolute;
-    right: 48px;
-    bottom: 0px;
-    font-size: 18px;
-    opacity: 0.12;
+    position:       absolute;
+    right:          48px;
+    bottom:         0px;
+    opacity:        0.12;
     letter-spacing: 0.2em;
-    font-size: 11px;
+    font-size:      11px;
     text-transform: uppercase;
-    writing-mode: vertical-rl;
-    color: var(--mid);
+    writing-mode:   vertical-rl;
+    color:          var(--mid);
+    transition:     color var(--transition-speed) ease;
   }
 
-  /* ── DIVIDER ── */
+
+  /* ============================================================
+     DIVIDER
+     Full-width horizontal rule between sections.
+     Uses --rule so it fades correctly with the theme.
+  ============================================================ */
   hr {
-    border: none;
+    border:     none;
     border-top: 1px solid var(--rule);
-    margin: 0 48px;
+    margin:     0 48px;
+    transition: border-color var(--transition-speed) ease;
   }
 
-  /* ── SECTIONS ── */
+
+  /* ============================================================
+     SECTION WRAPPER
+     Standard content block for all main sections.
+     Centered with max-width to match the hero column.
+  ============================================================ */
   .section {
     max-width: 900px;
-    margin: 0 auto;
-    padding: 80px 48px;
+    margin:    0 auto;
+    padding:   80px 48px;
   }
 
+  /* Small red uppercase section number (e.g. "01 — The card") */
   .section-label {
-    font-size: 11px;
-    font-weight: 500;
+    font-size:      11px;
+    font-weight:    500;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 32px;
+    color:          var(--accent);
+    margin-bottom:  32px;
+    transition:     color var(--transition-speed) ease;
   }
 
-  /* ── THE CARD SECTION ── */
+
+  /* ============================================================
+     THE CARD SECTION (01)
+     Two-column grid: description text left, mock card right.
+  ============================================================ */
   .card-section {
-    display: grid;
+    display:               grid;
     grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
+    gap:                   64px;
+    align-items:           start;
   }
 
   .card-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 1.2;
+    font-family:   'Playfair Display', serif;
+    font-size:     36px;
+    font-weight:   400;
+    line-height:   1.2;
     margin-bottom: 24px;
   }
 
   .card-section h2 em { font-style: italic; color: var(--accent); }
 
+  /* Body paragraph text. Uses --body-text-color so it can be
+     overridden per-theme without any hardcoded hex values. */
   .body-text {
-    font-size: 12.5px;
-    line-height: 2;
-    color: #3d3530;
+    font-size:     12.5px;
+    line-height:   2;
+    color:         var(--body-text-color);
     margin-bottom: 20px;
+    transition:    color var(--transition-speed) ease;
   }
 
-  /* mock acquaintance card */
+
+  /* ============================================================
+     MOCK CARD
+     The interactive physical card replica.
+     Slight rotation gives it a hand-placed feel.
+     Offset box-shadow simulates paper depth.
+     All colors reference variables for theme compatibility.
+  ============================================================ */
   .mock-card {
-    border: 1px solid var(--rule);
-    padding: 28px;
-    background: white;
-    box-shadow: 4px 4px 0 var(--rule);
-    font-size: 11px;
+    border:      1px solid var(--rule);
+    padding:     28px;
+    background:  var(--card-bg);
+    box-shadow:  4px 4px 0 var(--shadow-color);
+    font-size:   11px;
     line-height: 1.6;
-    transform: rotate(1.2deg);
+    transform:   rotate(1.2deg);
+    transition:  background    var(--transition-speed) ease,
+                 box-shadow    var(--transition-speed) ease,
+                 border-color  var(--transition-speed) ease;
   }
 
+  /* Each row inside the mock card — flex with a bottom border divider */
   .mock-card-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
+    display:        flex;
+    gap:            12px;
+    flex-wrap:      wrap;
+    margin-bottom:  10px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-    color: #555;
+    border-bottom:  1px solid var(--card-border);
+    color:          var(--mid);
+    transition:     border-color var(--transition-speed) ease,
+                    color        var(--transition-speed) ease;
   }
 
+  /* Last row has no bottom border */
   .mock-card-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-  .mock-card-col {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  /* Column variant of a card row — stacks children vertically */
+  .mock-card-col { display: flex; flex-direction: column; gap: 8px; }
 
+  /* Small muted label above option groups inside a column row */
   .mock-card-col-label {
-    color: #999;
-    font-size: 10px;
+    color:      var(--card-meta-color);
+    font-size:  10px;
+    transition: color var(--transition-speed) ease;
   }
 
-  .card-options-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-  }
+  /* Wrapping flex container for groups of selectable pill options */
+  .card-options-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
 
-  /* clickable options */
+  /* Individual selectable pill option.
+     Transparent border by default — appears on hover/select.
+     Uses variable colors so hero and card contexts can each override. */
   .card-option {
-    cursor: pointer;
-    padding: 1px 8px;
-    border-radius: 50px;
-    border: 1px solid transparent;
-    color: #bbb;
-    transition: color 0.15s, border-color 0.15s;
-    user-select: none;
-    white-space: nowrap;
-    font-size: 11px;
+    cursor:         pointer;
+    padding:        1px 8px;
+    border-radius:  50px;
+    border:         1px solid transparent;
+    color:          var(--card-option-color);
+    transition:     color        0.15s,
+                    border-color 0.15s;
+    user-select:    none;
+    white-space:    nowrap;
+    font-size:      11px;
   }
 
-  .card-option:hover { color: #888; border-color: #ddd; }
+  /* Hovered pill — slightly more visible */
+  .card-option:hover {
+    color:        var(--card-option-hover);
+    border-color: var(--card-option-border-hover);
+  }
 
+  /* Selected pill — full ink color with a visible border ring */
   .card-option.selected {
     border-color: var(--ink);
-    color: var(--ink);
-    font-weight: 400;
+    color:        var(--ink);
+    font-weight:  400;
   }
 
-  /* name input */
+  /* Contenteditable name field styled as a large italic serif.
+     word-break: break-word wraps at word boundaries where possible,
+     only breaking mid-word if the word itself exceeds the container. */
   .card-name-input {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 3em;
-    border: none;
-    border-bottom: 1px solid #eee;
-    outline: none;
-    width: 100%;
-    background: transparent;
-    color: var(--ink);
+    font-family:    'Playfair Display', serif;
+    font-style:     italic;
+    font-size:      3em;
+    border:         none;
+    border-bottom:  1px solid var(--card-border);
+    outline:        none;
+    width:          100%;
+    background:     transparent;
+    color:          var(--ink);
     letter-spacing: 0.03em;
-    padding: 2px 0 4px;
-    margin-top: 2px;
-    transition: border-color 0.2s;
-    display: block;
-    word-break: break-word;
+    padding:        2px 0 4px;
+    margin-top:     2px;
+    display:        block;
+    word-break:     break-word;
+    transition:     border-color var(--transition-speed) ease,
+                    color        var(--transition-speed) ease;
   }
 
+  /* CSS placeholder for contenteditable — shown when the element is empty */
   .card-name-input:empty::before {
-  content: attr(data-placeholder);
-  color: #ddd;
+    content: attr(data-placeholder);
+    color:   var(--card-option-color);
   }
 
+  /* Accent underline when the name field is focused */
   .card-name-input:focus { border-bottom-color: var(--accent); }
-  .card-name-input::placeholder { color: #ddd; }
 
+  /* Two-column metadata row showing Time and Place */
   .mock-card-meta {
-    display: grid;
+    display:               grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    font-size: 10px;
-    color: #888;
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #eee;
+    gap:                   8px;
+    font-size:             10px;
+    color:                 var(--card-meta-color);
+    margin-bottom:         12px;
+    padding-bottom:        12px;
+    border-bottom:         1px solid var(--card-border);
+    transition:            color        var(--transition-speed) ease,
+                           border-color var(--transition-speed) ease;
   }
 
   .mock-card-meta span { display: block; }
+
+  /* The value text in metadata rows (e.g. "Philadelphia") */
   .mock-card-meta strong {
-    color: var(--ink);
+    color:       var(--ink);
     font-weight: 400;
-    font-size: 11px;
+    font-size:   11px;
+    transition:  color var(--transition-speed) ease;
   }
 
-  /* ── WHY SECTION ── */
+
+  /* ============================================================
+     WHY SECTION (02)
+     Three-column grid of reasons, each with a large
+     decorative numeral, a title, and body text.
+  ============================================================ */
   .why-grid {
-    display: grid;
+    display:               grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 8px;
+    gap:                   32px;
+    margin-top:            8px;
   }
 
+  /* Each reason — top border acts as a visual separator */
   .why-item {
-    border-top: 1px solid var(--rule);
+    border-top:  1px solid var(--rule);
     padding-top: 24px;
+    transition:  border-color var(--transition-speed) ease;
   }
 
+  /* Large decorative numeral (I, II, III) in faint --rule color */
   .why-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    color: var(--rule);
-    line-height: 1;
+    font-family:   'Playfair Display', serif;
+    font-size:     40px;
+    color:         var(--rule);
+    line-height:   1;
     margin-bottom: 16px;
+    transition:    color var(--transition-speed) ease;
   }
 
+  /* Small bold uppercase reason title */
   .why-title {
-    font-size: 11px;
-    font-weight: 600;
+    font-size:      11px;
+    font-weight:    600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom:  10px;
   }
 
   .why-item p {
-    font-size: 12px;
-    color: var(--mid);
+    font-size:  12px;
+    color:      var(--mid);
     line-height: 1.9;
+    transition: color var(--transition-speed) ease;
   }
 
-  /* ── JAY SECTION ── */
+
+  /* ============================================================
+     JAY SECTION (03)
+     Two-column grid: bio left, details right. Tag cloud below.
+  ============================================================ */
   .jay-section {
-    display: grid;
+    display:               grid;
     grid-template-columns: 1.2fr 1fr;
-    gap: 64px;
-    align-items: start;
+    gap:                   64px;
+    align-items:           start;
   }
 
   .jay-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 1.2;
+    font-family:   'Playfair Display', serif;
+    font-size:     36px;
+    font-weight:   400;
+    line-height:   1.2;
     margin-bottom: 24px;
   }
 
   .jay-section h2 em { font-style: italic; color: var(--accent); }
 
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-  }
+  /* Wrapping flex row of interest tag pills */
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 
+  /* Small label above the tag cloud */
   .tag-cloud-title {
-    font-size: 12px;
-    font-weight: 300;
+    font-size:      12px;
+    font-weight:    300;
     letter-spacing: 0.15em;
+    transition:     color var(--transition-speed) ease;
   }
 
+  /* Individual interest tag — bordered, uppercase */
   .tag {
-    font-size: 10px;
+    font-size:      10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    border: 1px solid var(--rule);
-    padding: 6px 14px;
-    color: var(--mid);
+    border:         1px solid var(--rule);
+    padding:        6px 14px;
+    color:          var(--mid);
+    transition:     color        var(--transition-speed) ease,
+                    border-color var(--transition-speed) ease;
   }
 
+  /* Inverted filled tag — dark background, light text */
   .tag.filled {
-    background: var(--ink);
-    color: var(--cream);
+    background:   var(--ink);
+    color:        var(--cream);
     border-color: var(--ink);
   }
 
+  /* Bordered container for the key/value detail rows */
   .details-block {
-    border: 1px solid var(--rule);
-    padding: 28px;
+    border:     1px solid var(--rule);
+    padding:    28px;
+    transition: border-color var(--transition-speed) ease;
   }
 
+  /* Single label/value pair inside the details block */
   .detail-row {
-    display: flex;
+    display:        flex;
     flex-direction: column;
-    gap: 4px;
-    align-items: flex-start;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--rule);
-    font-size: 11px;
+    gap:            4px;
+    align-items:    flex-start;
+    padding:        10px 0;
+    border-bottom:  1px solid var(--rule);
+    font-size:      11px;
+    transition:     border-color var(--transition-speed) ease;
   }
 
   .detail-row:last-child { border-bottom: none; }
-  .detail-label { color: var(--mid); letter-spacing: 0.1em; }
-  .detail-val { color: var(--ink); font-weight: 400; }
 
-  /* ── PAY IT FORWARD ── */
+  /* Muted key label (e.g. "Based in") */
+  .detail-label {
+    color:          var(--mid);
+    letter-spacing: 0.1em;
+    transition:     color var(--transition-speed) ease;
+  }
+
+  /* Primary value text (e.g. "Philly") */
+  .detail-val {
+    color:       var(--ink);
+    font-weight: 400;
+    transition:  color var(--transition-speed) ease;
+  }
+
+
+  /* ============================================================
+     PAY IT FORWARD SECTION (04)
+     Full-width inverted section — uses --ink as background
+     so it reads as a dark band against the page.
+     Inner grid: copy left, accordion right.
+  ============================================================ */
   .pif-section {
     background: var(--ink);
-    color: var(--cream);
-    padding: 80px 48px;
+    color:      var(--cream);
+    padding:    80px 48px;
+    transition: background var(--transition-speed) ease,
+                color      var(--transition-speed) ease;
   }
 
   .pif-inner {
-    max-width: 900px;
-    margin: 0 auto;
-    display: grid;
+    max-width:             900px;
+    margin:                0 auto;
+    display:               grid;
     grid-template-columns: 1.5fr 1fr;
-    gap: 64px;
-    align-items: center;
+    gap:                   64px;
+    align-items:           center;
   }
 
-  .pif-section .section-label { color: #8c7b6b; }
+  /* Section label inside the dark band — warm muted tone
+     instead of --accent since the bg is already dark */
+  .pif-section .section-label {
+    color:      var(--mid);
+    transition: color var(--transition-speed) ease;
+  }
 
   .pif-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 1.2;
+    font-family:   'Playfair Display', serif;
+    font-size:     40px;
+    font-weight:   400;
+    line-height:   1.2;
     margin-bottom: 24px;
-    color: var(--cream);
+    color:         var(--cream);
+    transition:    color var(--transition-speed) ease;
   }
 
   .pif-section h2 em { font-style: italic; color: var(--accent); }
 
   .pif-section p {
-    font-size: 12.5px;
+    font-size:  12.5px;
     line-height: 2;
-    color: #a89f94;
+    color:      var(--mid);
+    transition: color var(--transition-speed) ease;
   }
 
-  /* ── ACCORDION ── */
+
+  /* ============================================================
+     ACCORDION
+     Three expandable cards stacked in a single outer border.
+     Each expands/collapses via a max-height transition
+     driven by the .open class toggled in JS.
+  ============================================================ */
+
+  /* Outer container — single border wrapping all three cards */
   .pif-cards {
-    display: flex;
+    display:        flex;
     flex-direction: column;
-    gap: 0;
-    border: 1px solid #3a3530;
+    border:         1px solid var(--rule);
+    transition:     border-color var(--transition-speed) ease;
   }
 
+  /* Individual accordion row */
   .accordion-card {
-    border-bottom: 1px solid #3a3530;
-    cursor: pointer;
-    transition: background 0.2s;
-    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+    cursor:        pointer;
+    overflow:      hidden;
+    transition:    background   var(--transition-speed) ease,
+                   border-color var(--transition-speed) ease;
   }
 
+  /* No bottom border on the last card — the outer container provides it */
   .accordion-card:last-child { border-bottom: none; }
 
+  /* Subtle background lift on hover and when open */
   .accordion-card:hover { background: rgba(255,255,255,0.03); }
   .accordion-card.open  { background: rgba(255,255,255,0.04); }
 
+  /* Header row — italic Playfair title and rotating arrow */
   .accordion-card-header {
-    display: flex;
+    display:         flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    transition: color 0.2s;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: #c8beb4;
-    letter-spacing: 0.01em;
+    align-items:     center;
+    padding:         20px 24px;
+    font-family:     'Playfair Display', serif;
+    font-style:      italic;
+    font-size:       17px;
+    color:           var(--mid);
+    letter-spacing:  0.01em;
+    transition:      color var(--transition-speed) ease;
   }
 
-  .accordion-card:hover .accordion-card-header { color: var(--cream); }
+  /* Brighten header on hover and when open */
+  .accordion-card:hover .accordion-card-header,
   .accordion-card.open  .accordion-card-header { color: var(--cream); }
 
+  /* The → arrow — rotates 90° when the card is open */
   .accordion-card-arrow {
-    font-size: 11px;
+    font-size:   11px;
     font-family: 'DM Mono', monospace;
-    font-style: normal;
-    color: var(--accent);
-    transition: transform 0.3s ease, opacity 0.2s;
-    display: inline-block;
-    opacity: 0.6;
+    font-style:  normal;
+    color:       var(--accent);
+    display:     inline-block;
     flex-shrink: 0;
+    opacity:     0.6;
+    transition:  transform  0.3s ease,
+                 opacity    0.2s ease,
+                 color      var(--transition-speed) ease;
   }
 
   .accordion-card:hover .accordion-card-arrow { opacity: 1; }
   .accordion-card.open  .accordion-card-arrow { transform: rotate(90deg); opacity: 1; }
 
+  /* Collapsible body — animates via max-height. Starts collapsed at 0. */
   .accordion-card-body {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.35s ease;
-    padding: 0 24px;
-    font-size: 12px;
-    line-height: 2;
-    color: #a89f94;
+    max-height:     0;
+    overflow:       hidden;
+    padding:        0 24px;
+    font-size:      12px;
+    line-height:    2;
+    color:          var(--mid);
     letter-spacing: 0.02em;
+    transition:     max-height var(--transition-speed) ease,
+                    padding    var(--transition-speed) ease,
+                    color      var(--transition-speed) ease;
   }
 
+  /* Expanded state — reveals content with bottom padding */
   .accordion-card.open .accordion-card-body {
     max-height: 140px;
-    padding: 0 24px 20px;
+    padding:    0 24px 20px;
   }
 
+  /* Inner content wrapper with a top border that fades from transparent.
+     The 1px border always occupies space in the DOM (no layout shift),
+     it just transitions from invisible to --rule color when open. */
   .accordion-card-body-inner {
-    border-top: 1px solid transparent;
+    border-top:  1px solid transparent;
     padding-top: 14px;
-    transition: border-color 0.35s ease;
+    transition:  border-color var(--transition-speed) ease;
   }
 
-  .accordion-card.open .accordion-card-body-inner {
-    border-top: 1px solid #433d37;
-    /* padding-top: 14px; */
-  }
+  /* Show the divider when the card is open */
+  .accordion-card.open .accordion-card-body-inner { border-color: var(--rule); }
 
-  /* ── FOOTER ── */
+
+  /* ============================================================
+     FOOTER
+     Flex row with space-between layout.
+     Top border separates it from the section above.
+  ============================================================ */
   footer {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 48px 48px 64px;
-    display: flex;
+    max-width:       900px;
+    margin:          0 auto;
+    padding:         48px 48px 64px;
+    display:         flex;
     justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--rule);
+    align-items:     flex-start; /* anchors both sides to the top */
+    border-top:      1px solid var(--rule);
+    transition:      border-color var(--transition-speed) ease;
   }
 
-  footer .footer-email {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent);
-    padding-bottom: 2px;
+  .footer-left {
+    display:        flex;
+    flex-direction: column;
+    gap:            10px;
   }
 
-  footer .footer-right {
-    font-size: 10px;
+  footer .footer-label {
+    font-size:      10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--mid);
-    text-align: right;
+    color:          var(--mid);
+    transition:     color var(--transition-speed) ease;
   }
 
-  /* ── FADE IN ── */
+  /* Italic serif email link with a red bottom border */
+  footer .footer-email {
+    font-family:     'Playfair Display', serif;
+    font-style:      italic;
+    font-size:       16px;
+    color:           var(--ink);
+    text-decoration: none;
+    display:         flex;
+    flex-direction:  column;
+    align-items:     flex-end;
+    gap:             16px;
+    text-align:      right;
+    border-bottom:   1px solid var(--accent);
+    padding-bottom:  2px;
+    transition:      color        var(--transition-speed) ease,
+                     border-color var(--transition-speed) ease;
+  }
+
+  /* Small uppercase sign-off on the right */
+  footer .footer-right {
+    font-size:      10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color:          var(--mid);
+    display:        flex;
+    flex-direction: column;
+    align-items:    flex-end;
+    gap:            16px;
+    text-align:     right;
+    transition:     color var(--transition-speed) ease;
+  }
+
+
+  /* ============================================================
+     FADE-IN ANIMATION
+     Elements start invisible and 20px below their final position.
+     The IntersectionObserver in JS adds .visible when they enter
+     the viewport, triggering the transition to full opacity
+     and natural position.
+  ============================================================ */
   .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+    opacity:    0;
+    transform:  translateY(20px);
+    transition: opacity   0.7s ease,
+                transform 0.7s ease;
   }
 
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+
+  /* ============================================================
+     RESPONSIVE — MOBILE (max 640px)
+     Collapses all multi-column grids to single column.
+     Reduces padding, removes card rotation, centers footer.
+  ============================================================ */
   @media (max-width: 640px) {
-    .hero, .section, footer { padding: 60px 28px; }
-    hr { margin: 0 28px; }
-    .card-section, .jay-section, .why-grid, .pif-inner { grid-template-columns: 1fr; gap: 40px; }
-    .mock-card { transform: none; }
-    .pif-section { padding: 60px 28px; }
-    footer { flex-direction: column; gap: 24px; text-align: center; }
-    footer .footer-right { text-align: center; }
+    .hero, .section, footer    { padding: 60px 28px; }
+    hr                         { margin: 0 28px; }
+    .card-section, .jay-section,
+    .why-grid, .pif-inner      { grid-template-columns: 1fr; gap: 40px; }
+    .mock-card                 { transform: none; }
+    .pif-section               { padding: 60px 28px; }
+    footer                     { flex-direction: column; gap: 24px; text-align: center; align-items: center; }
+    .footer-left               { align-items: center; text-align: center; }
+    footer .footer-right       { align-items: center; text-align: center; }
   }
+
 </style>
 </head>
 <body>
 
+<!-- <button class="theme-toggle" onclick="toggleTheme()">Dark</button> -->
+
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-tag">Thanks for stopping by</div>
+  <div class="hero-tag">
+    Thanks for stopping by
+    <span class="hero-tag-rule"></span>
+    <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
+  </div>
   <h1>It seems you've<br>received a <em>connection card.</em></h1>
   <p class="hero-sub">
-  <span class="card-option" data-group="hero-greeting">(Hi)</span>
-  <span class="card-option" data-group="hero-greeting">(Hey)</span>
-  <span class="card-option selected" data-group="hero-greeting">(Hello)</span>
-  <span class="card-option" data-group="hero-greeting">(Um)</span>
-  <br><br>
-  You're here because something happened. Someone handed you a small card. That someone was me.
+    <span class="card-option" data-group="hero-greeting">(Hi)</span>
+    <span class="card-option" data-group="hero-greeting">(Hey)</span>
+    <span class="card-option selected" data-group="hero-greeting">(Hello)</span>
+    <span class="card-option" data-group="hero-greeting">(Um)</span>
+    <br><br>
+    You're here because something happened. Someone handed you a small card. That someone was me.
   </p>
   <a class="scroll-hint">Here's the story</a>
   <div class="watermark-hero">An opportunity awaits &nbsp; :)</div>
@@ -649,8 +877,8 @@
 
 <hr>
 
-<!-- THE CARD -->
-<section class="section fade-in" id="the-card">
+<!-- THE CARD (01) — pre-marked visible so scroll-to doesn't trigger fade -->
+<section class="section fade-in visible" id="the-card">
   <div class="section-label">01 — The card</div>
   <div class="card-section">
     <div>
@@ -660,11 +888,10 @@
       <p class="body-text">Taking inspiration from 19th century "calling cards" (how people showed their intent to socialize) updated for someone who just really liked the vibe.</p>
     </div>
     <div>
-
       <!-- INTERACTIVE MOCK CARD -->
       <div class="mock-card">
 
-        <!-- Row 1: Greeting -->
+        <!-- Row 1: Greeting selection -->
         <div class="mock-card-row">
           <span class="card-option" data-group="greeting">(Hi)</span>
           <span class="card-option" data-group="greeting">(Hey)</span>
@@ -672,8 +899,8 @@
           <span class="card-option" data-group="greeting">(Um)</span>
         </div>
 
-        <!-- Row 2: Name -->
-        <div class="mock-card-row mock-card-col" style="border-bottom:1px solid #eee; margin-bottom:10px; padding-bottom:10px;">
+        <!-- Row 2: Name mode + editable name field -->
+        <div class="mock-card-row mock-card-col" style="border-bottom:1px solid var(--card-border); margin-bottom:10px; padding-bottom:10px;">
           <div class="card-options-wrap">
             <span class="card-option selected" data-group="namemode">(My name is)</span>
             <span class="card-option" data-group="namemode">(My friend's name is)</span>
@@ -681,14 +908,14 @@
           <span class="card-name-input" contenteditable="true" data-placeholder="your name">Jay</span>
         </div>
 
-        <!-- Meta: time/place -->
+        <!-- Metadata: live clock + location -->
         <div class="mock-card-meta">
           <div><span>Time</span><strong>—</strong></div>
           <div><span>Place</span><strong>Philadelphia</strong></div>
         </div>
 
-        <!-- Row 3: Compliment -->
-        <div class="mock-card-row mock-card-col" style="border-bottom:1px solid #eee; margin-bottom:10px; padding-bottom:10px;">
+        <!-- Row 3: Compliment selection -->
+        <div class="mock-card-row mock-card-col" style="border-bottom:1px solid var(--card-border); margin-bottom:10px; padding-bottom:10px;">
           <span class="mock-card-col-label">I just wanted to say that your</span>
           <div class="card-options-wrap">
             <span class="card-option" data-group="compliment">(look)</span>
@@ -704,21 +931,21 @@
           </div>
         </div>
 
-        <!-- Row 4: Reaction -->
+        <!-- Row 4: Reaction selection -->
         <div class="mock-card-row">
           <span class="card-option" data-group="reaction">(is hard to ignore.)</span>
           <span class="card-option selected" data-group="reaction">(is intriguing.)</span>
           <span class="card-option" data-group="reaction">(caught my eye.)</span>
         </div>
 
-        <!-- Row 5: Sign off -->
+        <!-- Row 5: Timing selection + email -->
         <div class="mock-card-row mock-card-col">
           <span class="mock-card-col-label">Hope to hear from you</span>
           <div class="card-options-wrap">
             <span class="card-option selected" data-group="timing">(soon.)</span>
             <span class="card-option" data-group="timing">(one day.)</span>
           </div>
-          <span style="color:#aaa; margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
+          <span style="color: var(--card-meta-color); margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
         </div>
 
       </div>
@@ -728,7 +955,7 @@
 
 <hr>
 
-<!-- WHY -->
+<!-- WHY BOTHER (02) -->
 <section class="section fade-in">
   <div class="section-label">02 — Why bother</div>
   <div class="why-grid">
@@ -752,7 +979,7 @@
 
 <hr>
 
-<!-- JAY -->
+<!-- WHO AM I (03) -->
 <section class="section fade-in">
   <div class="section-label">03 — Who am I</div>
   <div class="jay-section">
@@ -760,7 +987,6 @@
       <h2>A person,<br><em>just like you.</em></h2>
       <p class="body-text">I hand these out because I genuinely think meeting strangers is one of the best things we can do. Not in a weird way. In a "the world gets a little bigger every time" kind of way.</p>
       <p class="body-text">If you're reading this, you were worth approaching. And I think that's really cool.</p>
-      
     </div>
     <div>
       <div class="details-block">
@@ -786,20 +1012,20 @@
         </div>
       </div>
     </div>
-  <div>
-  <div class="tag-cloud-title" style="text-transform: uppercase;">Likes & Interests</div>
-  <div class="tag-cloud" style="margin-top: 20px;">
-    <span class="tag">Going out</span>
-    <span class="tag">Music</span>
-    <span class="tag">Food & drinks</span>
-    <span class="tag">Tech</span>
-    <span class="tag">Reading</span>
-  </div>
-</div>
+    <div>
+      <div class="tag-cloud-title" style="text-transform: uppercase;">Likes & Interests</div>
+      <div class="tag-cloud" style="margin-top: 10px;">
+        <span class="tag">Going out</span>
+        <span class="tag">Music</span>
+        <span class="tag">Food & drinks</span>
+        <span class="tag">Tech</span>
+        <span class="tag">Reading</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- PAY IT FORWARD -->
+<!-- PASS IT ON (04) -->
 <div class="pif-section fade-in">
   <div class="pif-inner">
     <div>
@@ -810,74 +1036,103 @@
       <p>Think of it as a little chain of strangers becoming slightly less strange. One card at a time.</p>
     </div>
     <div class="pif-cards">
+
       <div class="accordion-card" onclick="toggleCard(this)">
         <div class="accordion-card-header">
-        <span>For a brave friend</span>
+          <span>For a brave friend</span>
           <span class="accordion-card-arrow">→</span>
         </div>
         <div class="accordion-card-body">
           <div class="accordion-card-body-inner">Play cupid. If you have someone in mind and you spot the perfect match, send them on their way.</div>
         </div>
       </div>
+
       <div class="accordion-card" onclick="toggleCard(this)">
         <div class="accordion-card-header">
-        <span>For a lucky duck</span>
+          <span>For a lucky duck</span>
           <span class="accordion-card-arrow">→</span>
         </div>
         <div class="accordion-card-body">
           <div class="accordion-card-body-inner">Show someone you care. It's a small gesture, but it can go a long way.</div>
         </div>
       </div>
+
       <div class="accordion-card" onclick="toggleCard(this)">
         <div class="accordion-card-header">
-        <span>For someone else</span>
+          <span>For someone else</span>
           <span class="accordion-card-arrow">→</span>
         </div>
         <div class="accordion-card-body">
           <div class="accordion-card-body-inner">Got nothing? Pass it on to someone who might.</div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
 
-<button class="theme-toggle" onclick="toggleTheme()">Dark</button>
-
 <!-- FOOTER -->
 <footer>
-  <div>
-    <div style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-bottom:10px;">Say hello</div>
+  <div class="footer-left">
+    <div class="footer-label">Say hello</div>
     <a href="mailto:jay@connectioncards.com" class="footer-email">jay@connectioncards.com</a>
   </div>
   <div class="footer-right">
-    <br><br>
-    An opportunity awaits.<br>
-    You found it.
+    <div class="footer-label">An opportunity awaits. You found it.</div>
+    <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
   </div>
 </footer>
 
 <script>
 
+  // ── LIVE CLOCK ──────────────────────────────────────────────
+  // Updates the Time field in the mock card every second
+  // with the current local time including hours, minutes, seconds.
   function updateTime() {
-  const now = new Date();
-  const timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' });
-  document.querySelector('.mock-card-meta strong').textContent = timeStr;
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], {
+      hour:   'numeric',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    document.querySelector('.mock-card-meta strong').textContent = timeStr;
   }
   updateTime();
   setInterval(updateTime, 1000);
 
-  function toggleTheme() {
-  const isDark = document.body.getAttribute('data-theme') === 'dark';
-  document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  document.querySelector('.theme-toggle').textContent = isDark ? 'Dark' : 'Light';
-  } 
 
-  // Accordion cards
+  // ── THEME TOGGLE ─────────────────────────────────────────────
+  // Reads the current data-theme on <body>, flips it between
+  // 'dark' and 'light', and updates the button label to show
+  // the name of the currently inactive mode.
+  function toggleTheme() {
+    const isDark = document.body.getAttribute('data-theme') === 'dark';
+    document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    updateToggleLabels(); // reads the new theme state and updates all buttons
+  }
+
+  function updateToggleLabels() {
+    const isDark = document.body.getAttribute('data-theme') === 'dark';
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      btn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    });
+  }
+  updateToggleLabels(); // runs once on page load to set the initial labelupdateToggleLabels();
+
+
+  // ── ACCORDION ────────────────────────────────────────────────
+  // Toggles the .open class on an accordion card element,
+  // which drives the max-height and border-color transitions in CSS.
   function toggleCard(card) {
     card.classList.toggle('open');
   }
 
-  // Fade in on scroll
+
+  // ── FADE-IN ON SCROLL ────────────────────────────────────────
+  // IntersectionObserver watches all .fade-in elements.
+  // When one enters the viewport past the 12% threshold,
+  // .visible is added to trigger the CSS opacity/transform transition.
+  // The element is unobserved after firing so it only animates once.
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -889,7 +1144,12 @@
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Card option selection — one active per group, click to toggle within group
+
+  // ── CARD OPTION SELECTION ────────────────────────────────────
+  // For each .card-option, on click: remove .selected from all
+  // siblings in the same data-group, then add .selected to the
+  // clicked element. Works across both the hero greeting group
+  // and all mock card option groups via the shared data-group attribute.
   document.querySelectorAll('.card-option').forEach(option => {
     option.addEventListener('click', () => {
       const group = option.dataset.group;
@@ -899,12 +1159,16 @@
       option.classList.add('selected');
     });
   });
-  
+
+
+  // ── SCROLL TO FIRST SECTION ──────────────────────────────────
+  // Clicking the scroll hint smoothly scrolls to #the-card.
+  // e.preventDefault() stops any default anchor jump behavior.
   document.querySelector('.scroll-hint').addEventListener('click', (e) => {
-  e.preventDefault();
-  const target = document.querySelector('#the-card');
-  target.scrollIntoView({ behavior: 'smooth' });
-});
+    e.preventDefault();
+    document.querySelector('#the-card').scrollIntoView({ behavior: 'smooth' });
+  });
+
 </script>
 </body>
 </html>
