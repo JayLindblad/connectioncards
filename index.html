@@ -1496,7 +1496,11 @@
         const file = new File([blob], 'connection-card.png', { type: 'image/png' });
       
         const canShare = navigator.share && navigator.canShare && navigator.canShare({ files: [file] });
-      
+
+        console.log('canShare:', canShare);
+        console.log('navigator.share:', !!navigator.share);
+        console.log('navigator.canShare:', !!navigator.canShare);
+        
         if (canShare) {
           try {
             await navigator.share({
