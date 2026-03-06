@@ -7,7 +7,15 @@
   <title>You got a card from Jay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700" rel="stylesheet">
+  
+  <!-- Load font CSS asynchronously via print media trick -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700">
+  <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700">
+  
+  <!-- Fallback for browsers that don't support the above -->
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700">
+  </noscript>
   <style>
 </head>
   /* ============================================================
