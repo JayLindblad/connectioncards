@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +17,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700">
   </noscript>
   <style>
-</head>
+
   /* ============================================================
      RESET
      Removes default browser margin, padding, and ensures
@@ -56,7 +55,6 @@
     --rule:                     #a69a86;
     --accent:                   #b8332a;
     --accent-dark:              #56140f;
-
     --card-bg:                  #ffffff;
     --card-border:              #eeeeee;
     --card-meta-color:          #888888;
@@ -65,8 +63,7 @@
     --card-option-border-hover: #dddddd;
     --body-text-color:          #3d3530;
     --shadow-color:             #d9d0c0;
-    --lift: rgba(0, 0, 0, 0.2);
-
+    --lift:                     rgba(0, 0, 0, 0.2);
     --transition-speed:         0.4s;
   }
 
@@ -84,7 +81,6 @@
     --mid-dark:                 #a79985;
     --rule:                     #7c7265;
     --accent:                   #c4392f;
-
     --card-bg:                  #211e1a;
     --card-border:              #2e2a25;
     --card-meta-color:          #e6d6c9;
@@ -93,7 +89,7 @@
     --card-option-border-hover: #3a3530;
     --body-text-color:          #a89f94;
     --shadow-color:             #2e2a25;
-    --lift: rgba(255, 255, 255, 0.2);
+    --lift:                     rgba(255, 255, 255, 0.2);
   }
 
 
@@ -115,6 +111,8 @@
                  color      var(--transition-speed) ease;
   }
 
+  /* FIX 3: Lock scroll when modal is open */
+  body.modal-open { overflow: hidden; }
 
   /* ============================================================
      GRAIN OVERLAY
@@ -140,9 +138,9 @@
     height:     2px;
     background: var(--accent);
     z-index:    1000;
-    transition: width 0.1s linear,
-                background var(--transition-speed) ease;
+    transition: width 0.1s linear, background var(--transition-speed) ease;
   }
+
 
   /* ============================================================
      THEME TOGGLE BUTTON
@@ -151,25 +149,22 @@
      z-index: 100 keeps it above page content but below the grain.
   ============================================================ */
   .theme-toggle {
-  background:     var(--cream);
-  color:          var(--ink);
-  border:         1px solid var(--rule);
-  font-family:    'DM Mono', monospace;
-  font-size:      10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding:        6px 14px;
-  cursor:         pointer;
-  transition:     color         var(--transition-speed) ease,
-                  border-color  var(--transition-speed) ease,
-                  background    var(--transition-speed) ease;
+    background:     var(--cream);
+    color:          var(--ink);
+    border:         1px solid var(--rule);
+    font-family:    'DM Mono', monospace;
+    font-size:      10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding:        6px 14px;
+    cursor:         pointer;
+    transition:     color        var(--transition-speed) ease,
+                    border-color var(--transition-speed) ease,
+                    background   var(--transition-speed) ease;
   }
 
   /* Brightens label and border on hover */
-  .theme-toggle:hover {
-  color:        var(--ink);
-  border-color: var(--mid);
-  }
+   .theme-toggle:hover { color: var(--ink); border-color: var(--mid); }
 
 
   /* ============================================================
@@ -178,10 +173,7 @@
      Strips default link underline; the ↓ arrow and bounce
      animation are added via the .scroll-hint class below.
   ============================================================ */
-  a.scroll-hint {
-    text-decoration: none;
-    cursor: pointer;
-  }
+  a.scroll-hint { text-decoration: none; cursor: pointer; }
 
 
   /* ============================================================
@@ -265,13 +257,12 @@
   .hero .watermark-hero {
     opacity:    0;
     transform:  translateY(12px);
-    transition: opacity   0.8s ease,
-                transform 0.8s ease;
+    transition: opacity   0.8s ease, transform 0.8s ease;
   }
 
-  .hero.fonts-ready h1           { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
-  .hero.fonts-ready .hero-sub    { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
-  .hero.fonts-ready .scroll-hint { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+  .hero.fonts-ready h1              { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+  .hero.fonts-ready .hero-sub       { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+  .hero.fonts-ready .scroll-hint    { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
   .hero.fonts-ready .watermark-hero { opacity: 0.12; transform: translateY(0); transition-delay: 0.6s; }
 
   /* Animated scroll prompt. Bounces gently via fadeup keyframes.
@@ -415,9 +406,7 @@
 
   /* Last row has no bottom border */
   .mock-card-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-  /* Column variant of a card row — stacks children vertically */
-  .mock-card-col { display: flex; flex-direction: column; gap: 8px; }
+  .mock-card-col            { display: flex; flex-direction: column; gap: 8px; }
 
   /* Small muted label above option groups inside a column row */
   .mock-card-col-label {
@@ -426,35 +415,37 @@
     transition: color var(--transition-speed) ease;
   }
 
-  /* Wrapper needed to contain the flip animation */
-  .city-wrapper {
-    display:     inline-block;
-    overflow:    hidden;
+  /* ── City ── */
+  .city-input {
+    color:       var(--ink);
+    font-weight: 400;
+    font-size:   11px;
+    outline:     none;
+    min-width:   4px;
+    transition:  color var(--transition-speed) ease;
+  }
+
+  .city-input:empty::before { content: attr(data-placeholder); color: var(--card-option-color); }
+  .city-input:focus          { border-bottom: 1px solid var(--accent); }
+
+  .city-randomize {
+    font-size:   13px;
     cursor:      pointer;
+    opacity:     0.4;
+    transition:  opacity 0.15s ease;
+    user-select: none;
+    display:     inline;
+    margin-left: 4px;
   }
 
-  .city-wrapper strong {
-    display: inline-block;
-    transition: none;
-  }
-
-  /* Flip out — current city rolls upward and away */
-  .city-wrapper.flip-out strong {
-    animation: city-flip-out 0.059s ease-in forwards;
-  }
-
-  /* Flip in — new city rolls in from below */
-  .city-wrapper.flip-in strong {
-    animation: city-flip-in 0.059s ease-out forwards;
-  }
+  .city-randomize:hover { opacity: 1; }
 
   @keyframes city-flip-out {
-    0%   { transform: translateY(0)     rotateX(0deg);   opacity: 1; }
-    100% { transform: translateY(-60%)  rotateX(90deg);  opacity: 0; }
+    0%   { transform: translateY(0)     rotateX(0deg);  opacity: 1; }
+    100% { transform: translateY(-100%) rotateX(90deg); opacity: 0; }
   }
-
   @keyframes city-flip-in {
-    0%   { transform: translateY(60%)   rotateX(-90deg); opacity: 0; }
+    0%   { transform: translateY(100%)  rotateX(-90deg); opacity: 0; }
     100% { transform: translateY(0)     rotateX(0deg);   opacity: 1; }
   }
 
@@ -465,28 +456,19 @@
      Transparent border by default — appears on hover/select.
      Uses variable colors so hero and card contexts can each override. */
   .card-option {
-    cursor:         pointer;
-    padding:        1px 8px;
-    border-radius:  50px;
-    /* border:         1px solid transparent; */
-    color:          var(--card-option-color);
-    transition:     color        0.15s,
-                    border-color 0.15s;
-    user-select:    none;
-    white-space:    nowrap;
-    font-size:      11px;
+    cursor:      pointer;
+    padding:     1px 8px;
+    color:       var(--card-option-color);
+    transition:  color 0.15s, border-color 0.15s;
+    user-select: none;
+    white-space: nowrap;
+    font-size:   11px;
+    position:    relative;
+    border:      none;
   }
 
-  /* Position the option relative so the SVG circle can be absolutely placed over it */
-  .card-option {
-    position: relative;
-    border: none;
-  }
-
-/* Hide the old selected border state since SVG handles it now */
-  .card-option.selected {
-    border-color: transparent;
-  }
+  .card-option:hover    { color: var(--card-option-hover); }
+  .card-option.selected { color: var(--ink); font-weight: 400; border-color: transparent; }
 
   .card-option svg.circle-ring {
     position:       absolute;
@@ -508,29 +490,26 @@
     transition:      stroke var(--transition-speed) ease;
   }
 
-  @keyframes draw-circle {
-    to { stroke-dashoffset: 0; }
+  @keyframes draw-circle   { to { stroke-dashoffset: 0; } }
+  @keyframes undraw-circle { to { stroke-dashoffset: var(--path-length); } }
+
+  /* ── Randomize-all die ── */
+  .group-randomize {
+    font-size:   11px;
+    cursor:      pointer;
+    opacity:     0.4;
+    transition:  opacity 0.15s ease;
+    user-select: none;
+    align-self:  center;
+    border:      1px solid var(--card-border);
+    padding:     4px 8px;
+    color:       var(--card-meta-color);
+    line-height: 1;
   }
 
-  @keyframes undraw-circle {
-    to { stroke-dashoffset: var(--path-length); }
-  }
-  /* Hovered pill — slightly more visible */
-  .card-option:hover {
-    color:        var(--card-option-hover);
-    border-color: var(--card-option-border-hover);
-  }
+  .group-randomize:hover { opacity: 1; }
 
-  /* Selected pill — full ink color with a visible border ring */
-  .card-option.selected {
-    /* border-color: var(--ink); */
-    color:        var(--ink);
-    font-weight:  400;
-  }
-
-  /* Contenteditable name field styled as a large italic serif.
-     word-break: break-word wraps at word boundaries where possible,
-     only breaking mid-word if the word itself exceeds the container. */
+  /* ── Name input ── */
   .card-name-input {
     font-family:    'Playfair Display', serif;
     font-style:     italic;
@@ -550,14 +529,8 @@
                     color        var(--transition-speed) ease;
   }
 
-  /* CSS placeholder for contenteditable — shown when the element is empty */
-  .card-name-input:empty::before {
-    content: attr(data-placeholder);
-    color:   var(--card-option-color);
-  }
-
-  /* Accent underline when the name field is focused */
-  .card-name-input:focus { border-bottom-color: var(--accent); }
+  .card-name-input:empty::before { content: attr(data-placeholder); color: var(--card-option-color); }
+  .card-name-input:focus         { border-bottom-color: var(--accent); }
 
   /* Two-column metadata row showing Time and Place */
   .mock-card-meta {
@@ -571,10 +544,10 @@
     border-bottom:         1px solid var(--card-border);
     transition:            color        var(--transition-speed) ease,
                            border-color var(--transition-speed) ease;
-    perspective:           400px;
   }
 
-  .mock-card-meta span { display: block; }
+  /* Block all spans except the city die (which sits inline) */
+  .mock-card-meta span:not(.city-randomize) { display: block; }
 
   /* The value text in metadata rows (e.g. "Philadelphia") */
   .mock-card-meta strong {
@@ -582,6 +555,14 @@
     font-weight: 400;
     font-size:   11px;
     transition:  color var(--transition-speed) ease;
+  }
+
+  /* ── Share button ── */
+  .card-email {
+    color:      var(--card-meta-color);
+    margin-top: 20px;
+    font-size:  10px;
+    transition: color var(--transition-speed) ease;
   }
 
   .copy-link-btn {
@@ -594,53 +575,243 @@
     border:         1px solid var(--card-border);
     padding:        4px 10px;
     cursor:         pointer;
-    margin-top:     8px;
-    align-self:     flex-start;
+    margin-top:     0;
     transition:     color        var(--transition-speed) ease,
                     border-color var(--transition-speed) ease;
   }
 
-  .copy-link-btn:hover { color: var(--ink); border-color: var(--mid); }
+  .copy-link-btn:hover  { color: var(--ink); border-color: var(--mid); }
+  .copy-link-btn.copied { color: var(--accent); border-color: var(--accent); }
 
-  /* Confirmation state */
-  .copy-link-btn.copied {
-    color:        var(--accent);
-    border-color: var(--accent);
+  /* ============================================================
+     SHARE MODAL — card preview version
+  ============================================================ */
+  .share-modal-overlay {
+    position:        fixed;
+    inset:           0;
+    background:      rgba(0, 0, 0, 0);
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    z-index:         200;
+    pointer-events:  none;
+    transition:      background 0.3s ease;
   }
 
-  .print-card-btn {
+  .share-modal-overlay.active {
+    background:     rgba(0, 0, 0, 0.6);
+    pointer-events: all;
+  }
+
+  .share-modal {
+    background:  var(--cream);
+    border:      1px solid var(--rule);
+    padding:     28px;
+    width:       420px;
+    max-width:   92vw;
+    max-height:  90vh;
+    overflow-y:  auto;
+    box-shadow:  5px 5px 0 var(--shadow-color);
+    transform:   translateY(16px);
+    opacity:     0;
+    position:    relative;
+    transition:  transform 0.3s ease, opacity 0.3s ease,
+                 background var(--transition-speed) ease,
+                 border-color var(--transition-speed) ease,
+                 box-shadow var(--transition-speed) ease;
+  }
+
+  .share-modal-overlay.active .share-modal {
+    transform: translateY(0);
+    opacity:   1;
+  }
+
+  /* FIX 1: X button in top-right corner */
+  .share-modal-x {
+    position:    absolute;
+    top:         12px;
+    right:       14px;
+    background:  none;
+    border:      none;
+    cursor:      pointer;
+    font-family: 'DM Mono', monospace;
+    font-size:   15px;
+    color:       var(--mid);
+    line-height: 1;
+    padding:     4px 6px;
+    transition:  color 0.15s ease;
+    z-index:     1;
+  }
+
+  .share-modal-x:hover { color: var(--ink); }
+
+  .share-modal-label {
+    font-size:      9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color:          var(--mid);
+    margin-bottom:  20px;
+    padding-right:  24px; /* don't overlap X button */
+    transition:     color var(--transition-speed) ease;
+  }
+
+  /* FIX 2: Card preview */
+  .share-card-preview {
+    border:      1px solid var(--rule);
+    padding:     20px 22px;
+    background:  var(--card-bg);
+    box-shadow:  3px 3px 0 var(--shadow-color);
+    font-size:   10px;
+    line-height: 1.6;
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    margin-bottom: 20px;
+    transition:  background var(--transition-speed) ease,
+                 box-shadow var(--transition-speed) ease,
+                 border-color var(--transition-speed) ease;
+  }
+
+  .scp-row {
+    display:        flex;
+    gap:            8px;
+    flex-wrap:      wrap;
+    margin-bottom:  8px;
+    padding-bottom: 8px;
+    border-bottom:  1px solid var(--card-border);
+    color:          var(--mid);
+    transition:     border-color var(--transition-speed) ease;
+  }
+
+  .scp-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .scp-col            { display: flex; flex-direction: column; gap: 6px; }
+
+  .scp-label {
+    font-size:  9px;
+    color:      var(--card-meta-color);
+    transition: color var(--transition-speed) ease;
+  }
+
+  .scp-name {
+    font-family:    'Playfair Display', serif;
+    font-style:     italic;
+    font-size:      2em;
+    color:          var(--ink);
+    border-bottom:  1px solid var(--card-border);
+    padding-bottom: 3px;
+    display:        block;
+    transition:     color var(--transition-speed) ease,
+                    border-color var(--transition-speed) ease;
+  }
+
+  .scp-meta {
+    display:               grid;
+    grid-template-columns: 1fr 1fr;
+    gap:                   8px;
+    font-size:             9px;
+    color:                 var(--card-meta-color);
+    margin-bottom:         8px;
+    padding-bottom:        8px;
+    border-bottom:         1px solid var(--card-border);
+    transition:            color var(--transition-speed) ease,
+                           border-color var(--transition-speed) ease;
+  }
+
+  .scp-meta strong {
+    color:       var(--ink);
+    font-weight: 400;
+    font-size:   10px;
+    display:     block;
+    margin-top:  2px;
+    transition:  color var(--transition-speed) ease;
+  }
+
+  .scp-selected {
+    color:       var(--ink);
+    font-size:   10px;
+    font-weight: 400;
+  }
+
+  .scp-dim {
+    color:     var(--card-option-color);
+    font-size: 10px;
+  }
+
+  /* Preview option pills — mirrors .card-option but read-only */
+  .scp-option {
+    display:     inline-block;
+    padding:     1px 8px;
+    font-size:   10px;
+    color:       var(--card-option-color);
+    position:    relative;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .scp-option.is-selected {
+    color:       var(--ink);
+    font-weight: 400;
+  }
+
+  .scp-option svg.scp-circle {
+    position:       absolute;
+    top:            50%;
+    left:           50%;
+    transform:      translate(-50%, -50%);
+    width:          90%;
+    height:         130%;
+    pointer-events: none;
+    overflow:       visible;
+  }
+
+  .scp-option svg.scp-circle path {
+    fill:            none;
+    stroke:          var(--ink);
+    stroke-width:    12;
+    stroke-linecap:  round;
+    stroke-linejoin: round;
+    transition:      stroke var(--transition-speed) ease;
+  }
+
+  .scp-email {
+    font-size:  9px;
+    color:      var(--card-meta-color);
+    margin-top: 6px;
+    transition: color var(--transition-speed) ease;
+  }
+
+  /* Modal bottom actions */
+  .share-modal-actions {
+    display:         flex;
+    justify-content: space-between;
+    align-items:     center;
+    gap:             8px;
+    border-top:      1px solid var(--card-border);
+    padding-top:     16px;
+    transition:      border-color var(--transition-speed) ease;
+  }
+
+  .share-modal-copy {
     font-family:    'DM Mono', monospace;
     font-size:      9px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color:          var(--card-meta-color);
     background:     none;
     border:         1px solid var(--card-border);
-    padding:        4px 10px;
+    padding:        5px 14px;
     cursor:         pointer;
-    margin-top:     8px;
-    align-self:     flex-start;
-    transition:     color        var(--transition-speed) ease,
-                    border-color var(--transition-speed) ease;
+    color:          var(--card-meta-color);
+    transition:     color var(--transition-speed) ease, border-color var(--transition-speed) ease;
   }
 
-  .print-card-btn:hover { color: var(--ink); border-color: var(--mid); }
+  .share-modal-copy:hover  { color: var(--ink); border-color: var(--mid); }
+  .share-modal-copy.copied { color: var(--accent); border-color: var(--accent); }
 
-  /* Print styles — hides everything except the mock card */
-  @media print {
-    body > *:not(.print-target) { display: none !important; }
-    .print-target {
-      display:    block !important;
-      position:   static !important;
-      transform:  none !important;
-      box-shadow: none !important;
-      border:     1px solid #ccc !important;
-      padding:    28px !important;
-      font-family: 'DM Mono', monospace;
-    }
-    .print-card-btn, .copy-link-btn, svg.circle-ring { display: none !important; }
+  .share-modal-hint {
+    font-size:      9px;
+    letter-spacing: 0.08em;
+    color:          var(--card-option-color);
+    transition:     color var(--transition-speed) ease;
   }
-
 
   /* ============================================================
      WHY SECTION (02)
@@ -681,10 +852,10 @@
   }
 
   .why-item p {
-    font-size:  12px;
-    color:      var(--mid-dark);
+    font-size:   12px;
+    color:       var(--mid-dark);
     line-height: 1.9;
-    transition: color var(--transition-speed) ease;
+    transition:  color var(--transition-speed) ease;
   }
 
 
@@ -709,16 +880,10 @@
 
   .jay-section h2 em { font-style: italic; color: var(--accent); }
 
-  /* Wrapping flex row of interest tag pills */
-  .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 
-  /* Small label above the tag cloud */
-  .tag-cloud-title {
-    font-size:      12px;
-    font-weight:    300;
-    letter-spacing: 0.15em;
-    transition:     color var(--transition-speed) ease;
-  }
+  /* Wrapping flex row of interest tag pills */
+  .tag-cloud       { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .tag-cloud-title { font-size: 12px; font-weight: 300; letter-spacing: 0.15em; transition: color var(--transition-speed) ease; }
 
   /* Individual interest tag — bordered, uppercase */
   .tag {
@@ -728,30 +893,18 @@
     border:         1px solid var(--rule);
     padding:        6px 14px;
     color:          var(--mid);
-    transition:     color        var(--transition-speed) ease,
-                    border-color var(--transition-speed) ease;
+    transition:     color var(--transition-speed) ease, border-color var(--transition-speed) ease;
   }
 
-  /* Inverted filled tag — dark background, light text */
-  .tag.filled {
-    background:   var(--ink);
-    color:        var(--cream);
-    border-color: var(--ink);
-  }
+  .tag.filled { background: var(--ink); color: var(--cream); border-color: var(--ink); }
 
-  /* Bordered container for the key/value detail rows */
-  .details-block {
-    border:     1px solid var(--rule);
-    padding:    28px;
-    transition: border-color var(--transition-speed) ease;
-  }
+  .details-block { border: 1px solid var(--rule); padding: 28px; transition: border-color var(--transition-speed) ease; }
 
   /* Single label/value pair inside the details block */
   .detail-row {
     display:        flex;
     flex-direction: column;
     gap:            4px;
-    align-items:    flex-start;
     padding:        10px 0;
     border-bottom:  1px solid var(--rule);
     font-size:      11px;
@@ -761,18 +914,9 @@
   .detail-row:last-child { border-bottom: none; }
 
   /* Muted key label (e.g. "Based in") */
-  .detail-label {
-    color:          var(--mid);
-    letter-spacing: 0.1em;
-    transition:     color var(--transition-speed) ease;
-  }
-
-  /* Primary value text (e.g. "Philly") */
-  .detail-val {
-    color:       var(--ink);
-    font-weight: 400;
-    transition:  color var(--transition-speed) ease;
-  }
+  .detail-label { color: var(--mid); letter-spacing: 0.1em; transition: color var(--transition-speed) ease; }
+    /* Primary value text (e.g. "Philly") */
+  .detail-val   { color: var(--ink); font-weight: 400; transition: color var(--transition-speed) ease; }
 
 
   /* ============================================================
@@ -785,8 +929,7 @@
     background: var(--ink);
     color:      var(--cream);
     padding:    80px 48px;
-    transition: background var(--transition-speed) ease,
-                color      var(--transition-speed) ease;
+    transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
   }
 
   .pif-inner {
@@ -798,12 +941,9 @@
     align-items:           center;
   }
 
-  /* Section label inside the dark band — warm muted tone
+   /* Section label inside the dark band — warm muted tone
      instead of --accent since the bg is already dark */
-  .pif-section .section-label {
-    color:      var(--mid);
-    transition: color var(--transition-speed) ease;
-  }
+  .pif-section .section-label { color: var(--mid); transition: color var(--transition-speed) ease; }
 
   .pif-section h2 {
     font-family:   'Playfair Display', serif;
@@ -816,13 +956,7 @@
   }
 
   .pif-section h2 em { font-style: italic; color: var(--accent); }
-
-  .pif-section p {
-    font-size:  12.5px;
-    line-height: 2;
-    color:      var(--mid);
-    transition: color var(--transition-speed) ease;
-  }
+  .pif-section p     { font-size: 12.5px; line-height: 2; color: var(--mid); transition: color var(--transition-speed) ease; }
 
 
   /* ============================================================
@@ -845,18 +979,13 @@
     border-bottom: 1px solid var(--rule);
     cursor:        pointer;
     overflow:      hidden;
-    transition:    background   var(--transition-speed) ease,
-                   border-color var(--transition-speed) ease;
+    transition:    background var(--transition-speed) ease, border-color var(--transition-speed) ease;
   }
 
-  /* No bottom border on the last card — the outer container provides it */
-  .accordion-card:last-child { border-bottom: none; }
+  .accordion-card:last-child           { border-bottom: none; }
+  .accordion-card:hover,
+  .accordion-card.open                 { background: var(--lift); }
 
-  /* Subtle background lift on hover and when open */
-  .accordion-card:hover { background: var(--lift); }
-  .accordion-card.open  { background: var(--lift); }
-
-  /* Header row — italic Playfair title and rotating arrow */
   .accordion-card-header {
     display:         flex;
     justify-content: space-between;
@@ -883,9 +1012,7 @@
     display:     inline-block;
     flex-shrink: 0;
     opacity:     0.6;
-    transition:  transform  0.3s ease,
-                 opacity    0.2s ease,
-                 color      var(--transition-speed) ease;
+    transition:  transform 0.3s ease, opacity 0.2s ease, color var(--transition-speed) ease;
   }
 
   .accordion-card:hover .accordion-card-arrow { opacity: 1; }
@@ -900,16 +1027,11 @@
     line-height:    2;
     color:          var(--mid);
     letter-spacing: 0.02em;
-    transition:     max-height var(--transition-speed) ease,
-                    padding    var(--transition-speed) ease,
-                    color      var(--transition-speed) ease;
+    transition:     max-height var(--transition-speed) ease, padding var(--transition-speed) ease, color var(--transition-speed) ease;
   }
 
   /* Expanded state — reveals content with bottom padding */
-  .accordion-card.open .accordion-card-body {
-    max-height: 140px;
-    padding:    0 24px 20px;
-  }
+  .accordion-card.open .accordion-card-body { max-height: 140px; padding: 0 24px 20px; }
 
   /* Inner content wrapper with a top border that fades from transparent.
      The 1px border always occupies space in the DOM (no layout shift),
@@ -935,16 +1057,12 @@
     padding:         48px 48px 64px;
     display:         flex;
     justify-content: space-between;
-    align-items:     flex-start; /* anchors both sides to the top */
+    align-items:     flex-start;
     border-top:      1px solid var(--rule);
     transition:      border-color var(--transition-speed) ease;
   }
 
-  .footer-left {
-    display:        flex;
-    flex-direction: column;
-    gap:            10px;
-  }
+  .footer-left { display: flex; flex-direction: column; gap: 10px; }
 
   footer .footer-label {
     font-size:      10px;
@@ -961,18 +1079,11 @@
     font-size:       16px;
     color:           var(--ink);
     text-decoration: none;
-    display:         flex;
-    flex-direction:  column;
-    align-items:     flex-end;
-    gap:             16px;
-    text-align:      right;
     border-bottom:   1px solid var(--accent);
     padding-bottom:  2px;
-    transition:      color        var(--transition-speed) ease,
-                     border-color var(--transition-speed) ease;
+    transition:      color var(--transition-speed) ease, border-color var(--transition-speed) ease;
   }
 
-  /* Small uppercase sign-off on the right */
   footer .footer-right {
     font-size:      10px;
     letter-spacing: 0.2em;
@@ -997,8 +1108,7 @@
   .fade-in {
     opacity:    0;
     transform:  translateY(20px);
-    transition: opacity   0.7s ease,
-                transform 0.7s ease;
+    transition: opacity 0.7s ease, transform 0.7s ease;
   }
 
   .fade-in.visible { opacity: 1; transform: translateY(0); }
@@ -1021,11 +1131,11 @@
     footer .footer-right       { align-items: center; text-align: center; }
   }
 
-</style>
+  </style>
 </head>
 <body>
+
 <div class="progress-bar"></div>
-<!-- <button class="theme-toggle" onclick="toggleTheme()">Dark</button> -->
 
 <!-- HERO -->
 <section class="hero">
@@ -1060,18 +1170,22 @@
       <p class="body-text">Taking inspiration from 19th century "calling cards" (how people showed their intent to socialize) updated for someone who just really liked the vibe.</p>
     </div>
     <div>
+
       <!-- INTERACTIVE MOCK CARD -->
       <div class="mock-card">
 
-        <!-- Row 1: Greeting selection -->
-        <div class="mock-card-row">
-          <span class="card-option" data-group="greeting">(Hi)</span>
-          <span class="card-option" data-group="greeting">(Hey)</span>
-          <span class="card-option selected" data-group="greeting">(Hello)</span>
-          <span class="card-option" data-group="greeting">(Um)</span>
+        <!-- Row 1: Greeting + randomize-all die -->
+        <div class="mock-card-row" style="justify-content:space-between; align-items:center;">
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <span class="card-option" data-group="greeting">(Hi)</span>
+            <span class="card-option" data-group="greeting">(Hey)</span>
+            <span class="card-option selected" data-group="greeting">(Hello)</span>
+            <span class="card-option" data-group="greeting">(Um)</span>
+          </div>
+          <span class="group-randomize" title="Randomize everything">⚄</span>
         </div>
 
-        <!-- Row 2: Name mode + editable name field -->
+        <!-- Row 2: Name mode + editable name -->
         <div class="mock-card-row mock-card-col" style="border-bottom:1px solid var(--card-border); margin-bottom:10px; padding-bottom:10px;">
           <div class="card-options-wrap">
             <span class="card-option selected" data-group="namemode">(My name is)</span>
@@ -1080,13 +1194,19 @@
           <span class="card-name-input" contenteditable="true" data-placeholder="your name">Jay</span>
         </div>
 
-        <!-- Metadata: live clock + location -->
+        <!-- Metadata: live clock + editable city with die -->
         <div class="mock-card-meta">
-          <div><span>Time</span><strong>—</strong></div>
-          <div><span>Place</span><div class="city-wrapper"><strong>Philadelphia</strong></div></div>
+          <div>
+            <span>Time</span>
+            <strong class="time-display">—</strong>
+          </div>
+          <div>
+            <span>Place <span class="city-randomize" title="Randomize city">⚄</span></span>
+            <strong class="city-input" contenteditable="true" data-placeholder="city">Philadelphia</strong>
+          </div>
         </div>
 
-        <!-- Row 3: Compliment selection -->
+        <!-- Row 3: Compliment -->
         <div class="mock-card-row mock-card-col" style="border-bottom:1px solid var(--card-border); margin-bottom:10px; padding-bottom:10px;">
           <span class="mock-card-col-label">I just wanted to say that your</span>
           <div class="card-options-wrap">
@@ -1103,22 +1223,24 @@
           </div>
         </div>
 
-        <!-- Row 4: Reaction selection -->
+        <!-- Row 4: Reaction -->
         <div class="mock-card-row">
           <span class="card-option" data-group="reaction">(is hard to ignore.)</span>
           <span class="card-option selected" data-group="reaction">(is intriguing.)</span>
           <span class="card-option" data-group="reaction">(caught my eye.)</span>
         </div>
 
-        <!-- Row 5: Timing selection + email -->
+        <!-- Row 5: Timing + email + share -->
         <div class="mock-card-row mock-card-col">
           <span class="mock-card-col-label">Hope to hear from you</span>
           <div class="card-options-wrap">
             <span class="card-option selected" data-group="timing">(soon.)</span>
             <span class="card-option" data-group="timing">(one day.)</span>
           </div>
-          <span class="card-email" style="color: var(--card-meta-color); margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
-          <button class="copy-link-btn" onclick="shareCard()">Share</button>
+          <!-- <span class="card-email">jay@anopportunityawaits.com</span> -->
+          <div style="display:flex; justify-content:flex-end; align-items:center; margin-top:8px;">
+            <button class="copy-link-btn" onclick="shareCard()">Share</button>
+          </div>
         </div>
 
       </div>
@@ -1129,7 +1251,7 @@
 <hr>
 
 <!-- WHY BOTHER (02) -->
-<section class="section fade-in">
+<section class="section fade-in" id="why-bother">
   <div class="section-label">02 — Why bother</div>
   <div class="why-grid">
     <div class="why-item">
@@ -1153,7 +1275,7 @@
 <hr>
 
 <!-- WHO AM I (03) -->
-<section class="section fade-in">
+<section class="section fade-in" id="who-am-i">
   <div class="section-label">03 — Who am I</div>
   <div class="jay-section">
     <div>
@@ -1186,11 +1308,11 @@
       </div>
     </div>
     <div>
-      <div class="tag-cloud-title" style="text-transform: uppercase;">Likes & Interests</div>
+      <div class="tag-cloud-title" style="text-transform: uppercase;">Likes &amp; Interests</div>
       <div class="tag-cloud" style="margin-top: 10px;">
         <span class="tag">Going out</span>
         <span class="tag">Music</span>
-        <span class="tag">Food & drinks</span>
+        <span class="tag">Food &amp; drinks</span>
         <span class="tag">Tech</span>
         <span class="tag">Reading</span>
       </div>
@@ -1199,7 +1321,7 @@
 </section>
 
 <!-- PASS IT ON (04) -->
-<div class="pif-section fade-in">
+<div class="pif-section fade-in" id="pass-it-on">
   <div class="pif-inner">
     <div>
       <div class="section-label">04 — Pass it on</div>
@@ -1209,7 +1331,6 @@
       <p>Think of it as a little chain of strangers becoming slightly less strange. One card at a time.</p>
     </div>
     <div class="pif-cards">
-
       <div class="accordion-card" onclick="toggleCard(this)">
         <div class="accordion-card-header">
           <span>For a brave friend</span>
@@ -1219,7 +1340,6 @@
           <div class="accordion-card-body-inner">Play cupid. If you have someone in mind and you spot the perfect match, send them on their way.</div>
         </div>
       </div>
-
       <div class="accordion-card" onclick="toggleCard(this)">
         <div class="accordion-card-header">
           <span>For a lucky duck</span>
@@ -1229,7 +1349,6 @@
           <div class="accordion-card-body-inner">Show someone you care. It's a small gesture, but it can go a long way.</div>
         </div>
       </div>
-
       <div class="accordion-card" onclick="toggleCard(this)">
         <div class="accordion-card-header">
           <span>For someone else</span>
@@ -1239,7 +1358,6 @@
           <div class="accordion-card-body-inner">Got nothing? Pass it on to someone who might.</div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -1248,13 +1366,32 @@
 <footer>
   <div class="footer-left">
     <div class="footer-label">Say hello</div>
-    <a href="mailto:jay@connectioncards.com" class="footer-email">jay@connectioncards.com</a>
+    <a href="mailto:jay@anopportunityawaits.com" class="footer-email">jay@anopportunityawaits.com</a>
   </div>
   <div class="footer-right">
     <div class="footer-label">An opportunity awaits. You found it.</div>
     <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
   </div>
 </footer>
+
+<!-- SHARE MODAL -->
+<div class="share-modal-overlay" id="share-overlay" onclick="closeShareModal()">
+  <div class="share-modal" onclick="event.stopPropagation()">
+
+    <!-- FIX 1: X close button -->
+    <button class="share-modal-x" onclick="closeShareModal()" aria-label="Close">✕</button>
+
+    <div class="share-modal-label">Share this card</div>
+
+    <!-- FIX 2: Card preview (populated by buildCardPreview()) -->
+    <div class="share-card-preview" id="share-card-preview"></div>
+
+    <div class="share-modal-actions">
+      <button class="share-modal-copy" id="share-copy-btn" onclick="copyShareUrl()">Copy link</button>
+      <!-- <span class="share-modal-hint">click outside to dismiss</span> -->
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -1265,32 +1402,14 @@
     document.querySelector('.hero').classList.add('fonts-ready');
   });
 
-  // ── LIVE CLOCK ──────────────────────────────────────────────
-  // Updates the Time field in the mock card every second
-  // with the current local time including hours, minutes, seconds.
-  function updateTime() {
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString([], {
-      hour:   'numeric',
-      minute: '2-digit',
-      second: '2-digit'
-    });
-    document.querySelector('.mock-card-meta strong').textContent = timeStr;
-  }
-  updateTime();
-  setInterval(updateTime, 1000);
-
   // ── PAGE PROGRESS BAR ────────────────────────────────────────
   // Fills a thin accent-colored line at the top of the viewport
   // proportional to how far down the page the user has scrolled.
   const progressBar = document.querySelector('.progress-bar');
-
   window.addEventListener('scroll', () => {
-    const scrollTop    = window.scrollY;
-    const docHeight    = document.documentElement.scrollHeight - window.innerHeight;
-    const scrolled     = (scrollTop / docHeight) * 100;
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
     progressBar.style.width = scrolled + '%';
-  });   
+  });
 
   // ── THEME TOGGLE ─────────────────────────────────────────────
   // Reads the current data-theme on <body>, flips it between
@@ -1299,7 +1418,7 @@
   function toggleTheme() {
     const isDark = document.body.getAttribute('data-theme') === 'dark';
     document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-    updateToggleLabels(); // reads the new theme state and updates all buttons
+    updateToggleLabels();
   }
 
   function updateToggleLabels() {
@@ -1308,8 +1427,7 @@
       btn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
     });
   }
-  updateToggleLabels(); // runs once on page load to set the initial labelupdateToggleLabels();
-
+  updateToggleLabels();
 
   // ── ACCORDION ────────────────────────────────────────────────
   // Toggles the .open class on an accordion card element,
@@ -1326,69 +1444,56 @@
   // The element is unobserved after firing so it only animates once.
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
     });
   }, { threshold: 0.12 });
-
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
+  // ── LIVE CLOCK ──────────────────────────────────────────────
+  // Builds spans once, then only updates textContent each second.
+  const timeDisplay = document.querySelector('.time-display');
+  timeDisplay.innerHTML = '<span class="th"></span>:<span class="tm"></span>:<span class="ts"></span>';
 
-  // ── CARD OPTION SELECTION ────────────────────────────────────
-  // For each .card-option, on click: remove .selected from all
-  // siblings in the same data-group, then add .selected to the
-  // clicked element. Works across both the hero greeting group
-  // and all mock card option groups via the shared data-group attribute.
+  function updateTime() {
+    const now = new Date();
+    timeDisplay.querySelector('.th').textContent = now.toLocaleTimeString([], { hour: 'numeric' });
+    timeDisplay.querySelector('.tm').textContent = String(now.getMinutes()).padStart(2, '0');
+    timeDisplay.querySelector('.ts').textContent = String(now.getSeconds()).padStart(2, '0');
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
 
-  // document.querySelectorAll('.card-option').forEach(option => {
-  //   option.addEventListener('click', () => {
-  //     const group = option.dataset.group;
-  //     document.querySelectorAll(`.card-option[data-group="${group}"]`).forEach(o => {
-  //       o.classList.remove('selected');
-  //     });
-  //     option.classList.add('selected');
-  //   });
-  // });
-
-
-  // Inject an SVG circle ring into every card option on load
+  // ── SVG CIRCLES ──────────────────────────────────────────────
   const CIRCLE_PATH = 'M947.08,114.9c-52.08-65.16-154.54-95.42-254.7-107.12C451.86-20.33,238.4,29.52,104.28,129.11,60.44,161.66,13.34,205.99,2.62,269.02c-13.02,76.57,24.51,135.14,67.77,169.44,46.58,36.92,111.19,56.58,180.37,66.67,6.93-1.38-4.49-1.37-3.28-1.09-44.99-10.35-94.74-23.4-122.43-44.83,65.31,34.12,162.42,37.18,257.98,37.17,98.08,0,191.14-7.89,267.81-27.33,112.1-28.41,214.4-82.53,279.84-162.87,22.13-27.16,44.21-62.59,47-101.66,2.62-36.56-13.08-67.7-30.61-89.63Z';
 
-  // Measure path length using a temporary off-screen SVG
   function getPathLength(d) {
-    const tempSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    tempSvg.style.cssText = 'position:absolute;visibility:hidden;width:0;height:0';
-    const tempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    tempPath.setAttribute('d', d);
-    tempSvg.appendChild(tempPath);
-    document.body.appendChild(tempSvg);
-    const length = tempPath.getTotalLength();
-    document.body.removeChild(tempSvg);
-    return length;
+    const svg  = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.style.cssText = 'position:absolute;visibility:hidden;width:0;height:0';
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    svg.appendChild(path);
+    document.body.appendChild(svg);
+    const len = path.getTotalLength();
+    document.body.removeChild(svg);
+    return len;
   }
 
   const PATH_LENGTH = getPathLength(CIRCLE_PATH);
 
-  // Inject SVG into every card option
   document.querySelectorAll('.card-option').forEach(option => {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const svg  = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.classList.add('circle-ring');
     svg.setAttribute('viewBox', '0 0 977.97 505.14');
     svg.setAttribute('preserveAspectRatio', 'none');
-
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', CIRCLE_PATH);
     path.style.strokeDasharray  = PATH_LENGTH;
     path.style.strokeDashoffset = PATH_LENGTH;
     path.style.setProperty('--path-length', PATH_LENGTH);
-
     svg.appendChild(path);
     option.appendChild(svg);
   });
 
-  // Draw circles on pre-selected options on page load
   document.querySelectorAll('.card-option.selected').forEach(option => {
     const path = option.querySelector('path');
     path.style.animationName           = 'draw-circle';
@@ -1396,11 +1501,10 @@
     path.style.animationTimingFunction = 'ease';
     path.style.animationFillMode       = 'forwards';
   });
-  
-  // Selection with draw/undraw animations
+
   document.querySelectorAll('.card-option').forEach(option => {
     option.addEventListener('click', () => {
-      const group = option.dataset.group;
+      const group   = option.dataset.group;
       const current = document.querySelector(`.card-option.selected[data-group="${group}"]`);
 
       if (current && current !== option) {
@@ -1409,14 +1513,14 @@
         current.classList.add('deselecting');
         currentPath.style.animation = 'none';
         requestAnimationFrame(() => {
-          currentPath.style.animation = '';
-          currentPath.style.animationName = 'undraw-circle';
+          currentPath.style.animation         = '';
+          currentPath.style.animationName     = 'undraw-circle';
           currentPath.style.animationDuration = '0.3s';
-          currentPath.style.animationFill = 'forwards';
+          currentPath.style.animationFill     = 'forwards';
           current.addEventListener('animationend', () => {
             current.classList.remove('deselecting');
             currentPath.style.strokeDashoffset = PATH_LENGTH;
-            currentPath.style.animation = 'none';
+            currentPath.style.animation        = 'none';
           }, { once: true });
         });
       }
@@ -1426,18 +1530,18 @@
       option.classList.add('selected');
       newPath.style.animation = 'none';
       requestAnimationFrame(() => {
-        newPath.style.animation = '';
-        newPath.style.animationName = 'draw-circle';
-        newPath.style.animationDuration = '0.6s';
+        newPath.style.animation               = '';
+        newPath.style.animationName           = 'draw-circle';
+        newPath.style.animationDuration       = '0.6s';
         newPath.style.animationTimingFunction = 'ease';
-        newPath.style.animationFillMode = 'forwards';
+        newPath.style.animationFillMode       = 'forwards';
       });
     });
   });
 
   // ── CITY RANDOMIZER ──────────────────────────────────────────
-  // Clicking the city text cycles to a random major US city.
-  // Philadelphia is the default on page load.
+  //   // Clicking the city text cycles to a random major US city.
+  // Philadelphia is the default on page load.  
   const cities = [
     'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix',
     'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin',
@@ -1447,137 +1551,204 @@
     'New Orleans', 'Minneapolis', 'Detroit', 'Baltimore', 'Kansas City'
   ];
 
-  const cityWrapper = document.querySelector('.city-wrapper');
-  const cityEl = cityWrapper.querySelector('strong');
+  const cityEl = document.querySelector('.city-input');
 
-  cityWrapper.addEventListener('click', () => {
-  // Don't trigger if already animating
-  if (cityWrapper.classList.contains('flip-out') || 
-      cityWrapper.classList.contains('flip-in')) return;
+  document.querySelector('.city-randomize').addEventListener('click', () => {
+    const current = cityEl.textContent.trim();
+    const options = cities.filter(c => c !== current);
+    const next    = options[Math.floor(Math.random() * options.length)];
+    cityEl.style.animation = 'none';
+    requestAnimationFrame(() => {
+      cityEl.style.animation = 'city-flip-out 0.1s ease-in forwards';
+      setTimeout(() => {
+        cityEl.textContent     = next;
+        cityEl.style.animation = 'city-flip-in 0.1s ease-out forwards';
+        setTimeout(() => { cityEl.style.animation = ''; }, 100);
+      }, 60);
+    });
+  });
 
-  const current = cityEl.textContent;
-  const options = cities.filter(c => c !== current);
-  const next = options[Math.floor(Math.random() * options.length)];
-
-  cityWrapper.classList.add('flip-out');
-
-  cityWrapper.addEventListener('animationend', () => {
-    cityWrapper.classList.remove('flip-out');
-    cityEl.textContent = next;
-    cityWrapper.classList.add('flip-in');
-
-    cityWrapper.addEventListener('animationend', () => {
-      cityWrapper.classList.remove('flip-in');
-    }, { once: true });
-
-  }, { once: true });
-});
-
-  // Handle selection with draw/undraw animations
-  document.querySelectorAll('.card-option').forEach(option => {
-    option.addEventListener('click', () => {
-      const group = option.dataset.group;
-
-      // Trigger undraw on the currently selected option in this group
-      const current = document.querySelector(`.card-option.selected[data-group="${group}"]`);
-      if (current && current !== option) {
-        current.classList.add('deselecting');
-        current.classList.remove('selected');
-        // Clean up the deselecting class after the animation finishes
-        current.addEventListener('animationend', () => {
-          current.classList.remove('deselecting');
-        }, { once: true });
-      }
-
-      // Draw the circle on the newly selected option
-      option.classList.add('selected');
+  // ── RANDOMIZE ALL ─────────────────────────────────────────────
+  // Fires a random option's click handler in each group.
+  document.querySelector('.group-randomize').addEventListener('click', () => {
+    ['greeting', 'namemode', 'compliment', 'reaction', 'timing'].forEach(group => {
+      const options = Array.from(document.querySelectorAll(`.card-option[data-group="${group}"]`));
+      const current = options.find(o => o.classList.contains('selected'));
+      const others  = options.filter(o => o !== current);
+      const next    = others[Math.floor(Math.random() * others.length)];
+      next.click();
     });
   });
 
   // ── SHARE CARD ───────────────────────────────────────────────
-  // Screenshots the mock card using html2canvas, then opens
-  // the native share sheet with the image attached.
-  // Falls back to downloading the image if Web Share isn't supported.
-  async function shareCard() {
-    const btn  = document.querySelector('.copy-link-btn');
-    const card = document.querySelector('.mock-card');
+  // Encodes current card state as URL params and shares via
+  // native share sheet, or copies to clipboard as fallback.
+  let currentShareUrl = '';
 
-    btn.textContent = 'Generating...';
-    btn.classList.add('copied');
-
-    try {
-      // Temporarily straighten the card for the screenshot
-      const originalTransform = card.style.transform;
-      card.style.transform = 'none';
-
-      const canvas = await html2canvas(card, {
-        backgroundColor: getComputedStyle(document.documentElement)
-                          .getPropertyValue('--card-bg').trim() || '#ffffff',
-        scale:   4,      // retina quality
-        useCORS: true,
-        logging: false,
-        // Hide the SVG circles and buttons from the screenshot
-        ignoreElements: el =>
-          el.classList.contains('circle-ring') ||
-          el.classList.contains('copy-link-btn') ||
-          el.classList.contains('print-card-btn') ||
-          el.classList.contains('card-email')
-      });
-
-      // Restore rotation
-      card.style.transform = originalTransform;
-
-      canvas.toBlob(async (blob) => {
-        const file = new File([blob], 'connection-card.png', { type: 'image/png' });
-      
-        const canShare = navigator.share && navigator.canShare && navigator.canShare({ files: [file] });
-
-        console.log('canShare:', canShare);
-        console.log('navigator.share:', !!navigator.share);
-        console.log('navigator.canShare:', !!navigator.canShare);
-        
-        if (canShare) {
-          try {
-            await navigator.share({
-              title: 'Connection Card',
-              text:  'Someone sent you a connection card.',
-              files: [file]
-            });
-          } catch (err) {
-            // User dismissed the share sheet — not a real error
-            if (err.name !== 'AbortError') console.error('Share failed:', err);
-          }
-        } else {
-          // Fallback for Chrome iOS and unsupported browsers — download directly
-          const url  = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href     = url;
-          link.download = 'connection-card.png';
-          link.click();
-          URL.revokeObjectURL(url);
-        }
-      
-        btn.textContent = 'Shared!';
-        setTimeout(() => {
-          btn.textContent = 'Share';
-          btn.classList.remove('copied');
-        }, 2000);
-      
-      }, 'image/png');
-
-    } catch (err) {
-      console.error('Share failed:', err);
-      btn.textContent = 'Share card';
-      btn.classList.remove('copied');
-    }
+  // FIX 2: Build a static visual preview of the current card state
+  // Renders all options for a group as preview pills, with SVG circle on the selected one.
+  // Returns an HTML string of .scp-option spans; circles are drawn via JS after insertion.
+  function scpGroupHtml(group) {
+    return Array.from(document.querySelectorAll(`.card-option[data-group="${group}"]`))
+      .map(opt => {
+        const label    = opt.textContent.replace(/[\u200B]/g, '').replace(/<[^>]*>/g, '').trim();
+        const isSelected = opt.classList.contains('selected');
+        return `<span class="scp-option${isSelected ? ' is-selected' : ''}" data-preview-group="${group}">${label}</span>`;
+      }).join('');
   }
 
+  // After innerHTML is set, inject SVG circles into selected preview pills and animate them.
+  function drawPreviewCircles(container) {
+    container.querySelectorAll('.scp-option.is-selected').forEach(pill => {
+      const svg  = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.classList.add('scp-circle');
+      svg.setAttribute('viewBox', '0 0 977.97 505.14');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', CIRCLE_PATH);
+      path.style.strokeDasharray  = PATH_LENGTH;
+      path.style.strokeDashoffset = PATH_LENGTH;
+      svg.appendChild(path);
+      pill.appendChild(svg);
 
+      // Animate in after a short delay so the modal transition has started
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          path.style.animation               = '';
+          path.style.animationName           = 'draw-circle';
+          path.style.animationDuration       = '0.55s';
+          path.style.animationTimingFunction = 'ease';
+          path.style.animationFillMode       = 'forwards';
+        });
+      });
+    });
+  }
 
-  // ── SCROLL TO FIRST SECTION ──────────────────────────────────
-  // Clicking the scroll hint smoothly scrolls to #the-card.
-  // e.preventDefault() stops any default anchor jump behavior.
-  document.querySelector('.scroll-hint').addEventListener('click', (e) => {
+  function buildCardPreview() {
+    const name    = document.querySelector('.card-name-input')?.innerText.trim() || 'Jay';
+    const city    = cityEl.textContent.trim() || 'Philadelphia';
+    const now     = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+
+    const container = document.getElementById('share-card-preview');
+    container.innerHTML = `
+      <div class="scp-row" style="flex-wrap:wrap; gap:4px;">
+        ${scpGroupHtml('greeting')}
+      </div>
+      <div class="scp-row scp-col">
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">${scpGroupHtml('namemode')}</div>
+        <span class="scp-name">${name}</span>
+      </div>
+      <div class="scp-meta">
+        <div><span>Time</span><strong>${timeStr}</strong></div>
+        <div><span>Place</span><strong>${city}</strong></div>
+      </div>
+      <div class="scp-row scp-col">
+        <span class="scp-label">I just wanted to say that your</span>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">${scpGroupHtml('compliment')}</div>
+      </div>
+      <div class="scp-row" style="flex-wrap:wrap; gap:4px;">
+        ${scpGroupHtml('reaction')}
+      </div>
+      <div class="scp-row scp-col">
+        <span class="scp-label">Hope to hear from you</span>
+        <div style="display:flex; flex-wrap:wrap; gap:4px;">${scpGroupHtml('timing')}</div>
+      </div>
+    `;
+
+    drawPreviewCircles(container);
+  }
+
+  function shareCard() {
+    const params = new URLSearchParams({
+      greeting:   document.querySelector('.card-option.selected[data-group="greeting"]')?.textContent.replace(/[()]/g, '').trim()   || 'Hello',
+      namemode:   document.querySelector('.card-option.selected[data-group="namemode"]')?.textContent.replace(/[()]/g, '').trim()   || 'My name is',
+      name:       document.querySelector('.card-name-input')?.innerText.trim()                                                       || 'Jay',
+      compliment: document.querySelector('.card-option.selected[data-group="compliment"]')?.textContent.replace(/[()]/g, '').trim() || 'presence',
+      reaction:   document.querySelector('.card-option.selected[data-group="reaction"]')?.textContent.replace(/[()]/g, '').trim()   || 'is intriguing.',
+      timing:     document.querySelector('.card-option.selected[data-group="timing"]')?.textContent.replace(/[()]/g, '').trim()     || 'soon.',
+      city:       cityEl.textContent.trim() || 'Philadelphia'
+    });
+
+    currentShareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+
+    // Reset copy button
+    const copyBtn = document.getElementById('share-copy-btn');
+    copyBtn.textContent = 'Copy link';
+    copyBtn.classList.remove('copied');
+
+    buildCardPreview();
+
+    // FIX 3: Lock scroll
+    document.body.classList.add('modal-open');
+    document.getElementById('share-overlay').classList.add('active');
+  }
+
+  function copyShareUrl() {
+    const btn = document.getElementById('share-copy-btn');
+    navigator.clipboard.writeText(currentShareUrl).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+    });
+  }
+
+  function closeShareModal() {
+    document.getElementById('share-overlay').classList.remove('active');
+    // FIX 3: Restore scroll
+    document.body.classList.remove('modal-open');
+  }
+
+  // Also close on Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeShareModal();
+  });
+
+  // ── RESTORE STATE FROM URL ───────────────────────────────────
+  // If opened from a shared link, reads query params and restores
+  // the card to match the shared configuration.
+  function restoreFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('name')) return;
+
+    // Clear all default selections and circles first
+    document.querySelectorAll('.card-option.selected').forEach(option => {
+      option.classList.remove('selected');
+      const path = option.querySelector('path');
+      if (path) { path.style.animation = 'none'; path.style.strokeDashoffset = PATH_LENGTH; }
+    });
+
+    // Restore name and city
+    const nameInput = document.querySelector('.card-name-input');
+    if (params.get('name')) nameInput.innerText  = params.get('name');
+    if (params.get('city')) cityEl.textContent   = params.get('city');
+
+    // Restore selections and redraw circles
+    ['greeting', 'namemode', 'compliment', 'reaction', 'timing'].forEach(group => {
+      const val = params.get(group);
+      if (!val) return;
+      document.querySelectorAll(`.card-option[data-group="${group}"]`).forEach(opt => {
+        if (opt.textContent.replace(/[()]/g, '').trim() === val.trim()) {
+          opt.classList.add('selected');
+          const path = opt.querySelector('path');
+          if (path) {
+            path.style.strokeDashoffset = PATH_LENGTH;
+            path.style.animation        = 'none';
+            requestAnimationFrame(() => {
+              path.style.animation               = '';
+              path.style.animationName           = 'draw-circle';
+              path.style.animationDuration       = '0.6s';
+              path.style.animationTimingFunction = 'ease';
+              path.style.animationFillMode       = 'forwards';
+            });
+          }
+        }
+      });
+    });
+  }
+  restoreFromUrl();
+
+  // ── SCROLL HINT ──────────────────────────────────────────────
+  document.querySelector('.scroll-hint').addEventListener('click', e => {
     e.preventDefault();
     document.querySelector('#the-card').scrollIntoView({ behavior: 'smooth' });
   });
