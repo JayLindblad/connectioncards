@@ -1489,7 +1489,7 @@
       const canvas = await html2canvas(card, {
         backgroundColor: getComputedStyle(document.documentElement)
                           .getPropertyValue('--card-bg').trim() || '#ffffff',
-        scale:   2,      // retina quality
+        scale:   4,      // retina quality
         useCORS: true,
         logging: false,
         // Hide the SVG circles and buttons from the screenshot
