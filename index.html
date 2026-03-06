@@ -1494,7 +1494,7 @@
         logging: false,
         // Hide the SVG circles and buttons from the screenshot
         ignoreElements: el =>
-          el.classList.contains('circle-ring')
+          el.classList.contains('circle-ring') ||
           el.classList.contains('copy-link-btn') ||
           el.classList.contains('print-card-btn')
       });
