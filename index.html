@@ -1100,7 +1100,7 @@
             <span class="card-option selected" data-group="timing">(soon.)</span>
             <span class="card-option" data-group="timing">(one day.)</span>
           </div>
-          <span style="color: var(--card-meta-color); margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
+          <span class="card-email" style="color: var(--card-meta-color); margin-top:20px; font-size:10px;">jay@anopportunityawaits.com</span>
           <button class="copy-link-btn" onclick="shareCard()">Share</button>
         </div>
 
@@ -1496,7 +1496,8 @@
         ignoreElements: el =>
           el.classList.contains('circle-ring') ||
           el.classList.contains('copy-link-btn') ||
-          el.classList.contains('print-card-btn')
+          el.classList.contains('print-card-btn') ||
+          el.classList.contains('card-email')
       });
 
       // Restore rotation
