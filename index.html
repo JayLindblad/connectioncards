@@ -258,6 +258,22 @@
   .hero .card-option:hover        { color: var(--ink); border-color: var(--rule); }
   .hero .card-option.selected     { color: var(--ink); border-color: var(--ink); }
 
+  /* Hero content starts invisible — fades in after fonts load */
+  .hero h1,
+  .hero .hero-sub,
+  .hero .scroll-hint,
+  .hero .watermark-hero {
+    opacity:    0;
+    transform:  translateY(12px);
+    transition: opacity   0.8s ease,
+                transform 0.8s ease;
+  }
+
+  .hero.fonts-ready h1           { opacity: 1; transform: translateY(0); transition-delay: 0.1s; }
+  .hero.fonts-ready .hero-sub    { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
+  .hero.fonts-ready .scroll-hint { opacity: 1; transform: translateY(0); transition-delay: 0.5s; }
+  .hero.fonts-ready .watermark-hero { opacity: 0.12; transform: translateY(0); transition-delay: 0.6s; }
+
   /* Animated scroll prompt. Bounces gently via fadeup keyframes.
      The ↓ arrow is injected via ::before content. */
   .scroll-hint {
@@ -1241,6 +1257,13 @@
 </footer>
 
 <script>
+
+  // ── HERO FONT FADE-IN ────────────────────────────────────────
+  // Waits for fonts to finish loading before revealing hero text,
+  // preventing a flash of unstyled or mis-sized text on first render.
+  document.fonts.ready.then(() => {
+    document.querySelector('.hero').classList.add('fonts-ready');
+  });
 
   // ── LIVE CLOCK ──────────────────────────────────────────────
   // Updates the Time field in the mock card every second
